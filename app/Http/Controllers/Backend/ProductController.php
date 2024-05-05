@@ -17,6 +17,8 @@ use App\Models\AttributeValue;
 use App\Models\ProductStock;
 use App\Models\GroupProduct;
 use App\Models\Unit;
+use App\Models\Type;
+use App\Models\Group;
 use Carbon\Carbon;
 use Image;
 use Session;
@@ -50,8 +52,10 @@ class ProductController extends Controller
         $vendors = Vendor::latest()->get();
         $suppliers = Supplier::latest()->get();
         $units = Unit::latest()->get();
+        $types = Type::latest()->get();
+        $groups = Group::latest()->get();
         $attributes = Attribute::latest()->get();
-    	return view('backend.product.product_add',compact('categories','brands','vendors','suppliers','attributes','units'));
+    	return view('backend.product.product_add',compact('categories','brands','vendors','suppliers','attributes','units','types','groups'));
 
     } // end method
 
@@ -123,6 +127,8 @@ class ProductController extends Controller
 
             $product = Product::create([
                 'brand_id'              => $request->brand_id,
+                'type_id'              => $request->type_id,
+                'group_id'              => $request->group_id,
                 'product_type'           => $request->product_type,
                 'category_id'           => $request->category_id,
                 'vendor_id'             => $request->vendor_id,
@@ -292,12 +298,14 @@ class ProductController extends Controller
         $brands = Brand::latest()->get();
         $vendors = Vendor::latest()->get();
         $suppliers = Supplier::latest()->get();
+        $types = Type::latest()->get();
+        $groups = Group::latest()->get();
         $units = Unit::latest()->get();
         $attributes = Attribute::latest()->get();
 
         //dd($product->stocks);
 
-        return view('backend.product.product_edit',compact('categories','vendors','suppliers','brands','attributes','product','multiImgs','units'));
+        return view('backend.product.product_edit',compact('categories','vendors','suppliers','brands','attributes','product','multiImgs','units','types','groups'));
 
     }
     // end method
@@ -395,6 +403,8 @@ class ProductController extends Controller
 
         $product->update([
             'brand_id'              => $request->brand_id,
+            'type_id'               => $request->type_id,
+            'group_id'              => $request->group_id,
             'category_id'           => $request->category_id,
             'vendor_id'             => $request->vendor_id,
             'supplier_id'           => $request->supplier_id,

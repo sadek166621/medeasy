@@ -22,10 +22,12 @@
                             <th scope="col">Name</th>
 {{--                            <th scope="col">Name (Bangla)</th>--}}
                             <th scope="col">Category</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Group</th>
                             <th scope="col">Product Price </th>
 							<th scope="col">Quantity </th>
 							<th scope="col">Discount </th>
-                            <th scope="col">Featured</th>
+                            {{-- <th scope="col">Featured</th> --}}
                             <th scope="col">Status</th>
                             <th scope="col" class="text-end">Action</th>
                         </tr>
@@ -47,6 +49,8 @@
                             </td>
 {{--                            <td> {{ $item->name_bn ?? 'NULL' }} </td>--}}
                             <td> {{ $item->category->name_en }} </td>
+                            <td> {{ $item->type->name }} </td>
+                            <td> {{ $item->group->name }} </td>
                             <td> {{ $item->regular_price ?? 'NULL' }} </td>
                             <td>
                                 @if($item->is_varient)

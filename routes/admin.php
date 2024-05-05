@@ -8,6 +8,8 @@ use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CampaingController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\TypeController;
+use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PageController;
@@ -220,6 +222,33 @@ Route::middleware('adminAccess')->group(function(){
 
         Route::get('/category_feature_status_change/{id}', [CategoryController::class, 'changeFeatureStatus'])->name('category.changeFeatureStatus');
 
+    });
+
+    Route::prefix('type')->group(function(){
+
+        Route::get('/index', [TypeController::class, 'index'])->name('type.index');
+        Route::get('/create', [TypeController::class, 'create'])->name('type.create');
+        Route::post('/store', [TypeController::class, 'store'])->name('type.store');
+        Route::get('/edit/{id}', [TypeController::class, 'edit'])->name('type.edit');
+        Route::post('/update/{id}', [TypeController::class, 'update'])->name('type.update');
+        Route::get('/delete/{id}', [TypeController::class, 'destroy'])->name('type.delete');
+        Route::get('/type_active/{id}', [TypeController::class, 'active'])->name('type.active');
+        Route::get('/type_inactive/{id}', [TypeController::class, 'inactive'])->name('type.in_active');
+
+
+    });
+
+
+    Route::prefix('group')->group(function(){
+
+        Route::get('/index', [GroupController::class, 'index'])->name('group.index');
+        Route::get('/create', [GroupController::class, 'create'])->name('group.create');
+        Route::post('/store', [GroupController::class, 'store'])->name('group.store');
+        Route::get('/edit/{id}', [GroupController::class, 'edit'])->name('group.edit');
+        Route::post('/update/{id}', [GroupController::class, 'update'])->name('group.update');
+        Route::get('/delete/{id}', [GroupController::class, 'destroy'])->name('group.delete');
+        Route::get('/group_active/{id}', [GroupController::class, 'active'])->name('group.active');
+        Route::get('/group_inactive/{id}', [GroupController::class, 'inactive'])->name('group.in_active');
     });
 
     // Attribute All Route

@@ -30,16 +30,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        View::composer('FrontEnd.include.header', function ($view){
+        View::composer('FrontEnd.include.side-cat', function ($view){
             $view->with(
                 //                'menu_featured_categories', Category::orderBy('name_en','ASC')
 //                    ->where('status','=',1)
 //                    ->where('is_featured', 1)
 //                    ->get(),
-                'menu_featured_categories', Category::orderBy('name_en','ASC')
+                'menu_featured_categories', Category::orderBy('id','ASC')
                     ->where('is_featured','=',1)
                     ->where('status','=',1)
-                    ->limit(6)->get()
+                    ->limit(8)->get()
             );
 
         });

@@ -160,11 +160,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $this->validate($request,[
             'name_en' => 'required',
         ]);
-        
+
         $category = Category::findOrFail($id);
         //Category Photo Update
         if($request->hasfile('image')){

@@ -60,10 +60,10 @@ class FrontendController extends Controller
         // Header Category End
 
         // Category Featured all
-        $featured_category = Category::orderBy('name_en','ASC')->where('is_featured','=',1)->where('status','=',1)->limit(5)->get();
+        $featured_category = Category::orderBy('name_en','ASC')->where('is_featured','=',1)->where('status','=',1)->limit(8)->get();
 
         // Tab Category all
-        $tab_categories = Category::orderBy('name_en','asc')->where('category_tab','=',1)->where('status','=',1)->limit(4)->get();
+        $tab_categories = Category::orderBy('id','asc')->where('is_featured','=',1)->where('status','=',1)->get();
 
         //Slider
         $sliders = Slider::where('status',1)->where('type', 1)->orderBy('id','DESC')->limit(10)->get();

@@ -141,7 +141,40 @@
 									</select>
 								</div>
 						   	</div>
-							<div class="col-md-6 mb-4 d-none" id="unit_field">
+
+
+							<div class="col-md-6 mb-4 " id="unit_field">
+								<label for="type_id" class="col-form-label" style="font-weight: bold;">Type:</label>
+								<div class="custom_select">
+									<select class="form-control select-active w-100 form-select select-nice" name="type_id" id="type_id">
+										<option disabled hidden {{old('type_id') ? '' : 'selected'}} readonly value="">--Select Type--</option>
+										@foreach($types as $type)
+											<option value="{{ $type->id }}" {{ old('type_id')== $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+										@endforeach
+									</select>
+								</div>
+						   	</div>
+
+							<div class="col-md-6 mb-4 " id="unit_field">
+								<label for="group_id" class="col-form-label" style="font-weight: bold;">Group:</label>
+								<div class="custom_select">
+									<select class="form-control select-active w-100 form-select select-nice" name="group_id" id="group_id">
+										<option disabled hidden {{old('group_id') ? '' : 'selected'}} readonly value="">--Select Group--</option>
+										@foreach($groups as $group)
+											<option value="{{ $group->id }}" {{ old('group_id')== $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
+										@endforeach
+									</select>
+								</div>
+						   	</div>
+
+
+
+
+
+
+
+
+							<div class="col-md-6 mb-4 " id="unit_field">
 								<label for="unit_id" class="col-form-label" style="font-weight: bold;">Unit Type:</label>
 								<div class="custom_select">
 									<select class="form-control select-active w-100 form-select select-nice" name="unit_id" id="unit_id">
@@ -152,7 +185,7 @@
 									</select>
 								</div>
 						   	</div>
-							<div class="col-md-6 mb-4 d-none" id="unit_weight_field">
+							<div class="col-md-6 mb-4 " id="unit_weight_field">
 								<label for="unit_weight" class="col-form-label" style="font-weight: bold;">Unit Weight (e.g. 10 mg, 1 Carton, 15 Pcs)</label>
 								<input class="form-control" id="unit_weight" type="number" min="0" name="unit_weight" placeholder="Write unit weight" value="{{old('unit_weight')}}">
 						   	</div>
@@ -241,7 +274,7 @@
 		        		<div class="row">
 		        			<div class="col-md-6 mb-4 ">
 	                          	<label for="purchase_price" class="col-form-label" style="font-weight: bold;">Product Buying Price: <span class="text-danger">*</span></label>
-	                            <input class="form-control" id="totalBuyingPriceInput" type="number" min="0" name="purchase_price" placeholder="Write product bying price" required>
+	                            <input class="form-control" id="totalBuyingPriceInput" type="text" min="0" name="purchase_price" placeholder="Write product bying price" required>
 		                        @error('purchase_price')
                                     <p class="text-danger">{{$message}}</p>
                                 @enderror
@@ -252,14 +285,14 @@
 	                        </div>
                             <div class="col-md-6 mb-4">
                                 <label for="regular_price" class="col-form-label" style="font-weight: bold;">Selling Price: <span class="text-danger">*</span></label>
-                                <input class="form-control" type="number" min="0" id="totalRegularPriceInput" name="regular_price" required placeholder="Write product selling price" >
+                                <input class="form-control" type="text" min="0" id="totalRegularPriceInput" name="regular_price" required placeholder="Write product selling price" >
                                 @error('regular_price')
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
                             </div>
 	                        <div class="col-md-6 mb-4 d-none " id="whole_sell_quantity_field">
 	                          	<label for="whole_sell_qty" class="col-form-label" style="font-weight: bold;">Whole Sell Minimum Quantity:</label>
-	                            <input class="form-control" id="whole_sell_qty" type="number" min="0" name="wholesell_minimum_qty" placeholder="Write product whole sell qty" value="{{old('wholesell_minimum_qty', 0)}}">
+	                            <input class="form-control" id="whole_sell_qty" type="text" min="0" name="wholesell_minimum_qty" placeholder="Write product whole sell qty" value="{{old('wholesell_minimum_qty', 0)}}">
 	                        </div>
 		        		</div>
 		        		<!-- Row //-->
@@ -267,7 +300,7 @@
 
 	                        <div class="col-md-6 mb-4">
 	                          	<label for="discount_price" class="col-form-label" style="font-weight: bold;">Discount Price: <span class="text-danger">*</span></label>
-	                            <input class="form-control" id="discount_price" type="number" id="discount_price" name="discount_price" value="{{old('discount_price', 0)}}" min="0" placeholder="Write product discount value" required>
+	                            <input class="form-control" id="discount_price" type="text" id="discount_price" name="discount_price" value="{{old('discount_price', 0)}}" min="0" placeholder="Write product discount value" required>
 	                        </div>
 	                        <div class="col-md-6 mb-4">
 	                         	<label for="discount_type" class="col-form-label" style="font-weight: bold;">Discount Type:</label>
@@ -415,13 +448,13 @@
                                     <label class="form-check-label cursor" for="is_digital">Digital</label>
                                 </div>
                           	</div>
-                          	<div class="row">
+                          	<div class="row d-none" >
                           		<div class="custom-control custom-switch ">
                                     <input type="checkbox" class="form-check-input me-2 cursor" name="is_featured" id="is_featured" value="1">
                                     <label class="form-check-label cursor" for="is_featured">Featured</label>
                                 </div>
                           	</div>
-                            <div class="row">
+                            <div class="row d-none">
                                 <div class="custom-control custom-switch ">
                                     <input type="checkbox" class="form-check-input me-2 cursor" name="is_replaceable" id="is_replaceable" value="1">
                                     <label class="form-check-label cursor" for="is_replaceable">Replaceable</label>

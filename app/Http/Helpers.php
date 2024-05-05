@@ -231,7 +231,7 @@ function calculateDiscount($id)
         $data['text'] = '৳'.$product->discount_price. ' Off';
     }
     elseif($product->discount_type == 2){
-        $data['discount'] = round($product->regular_price - ($product->discount_price*$product->regular_price/100));
+        $data['discount'] =($product->regular_price - ($product->discount_price*$product->regular_price/100));
         $data['text'] = $product->discount_price.'% Off';
     }
     return $data;
