@@ -228,7 +228,9 @@ class FrontendController extends Controller
                 $group_products = [];
             }
 
-            return view('FrontEnd.product.product_details', compact('group_products', 'shipping_charge', 'product','multiImg','categories','new_products','product_color_en','product_size_en','relatedProduct'));
+            $alternatives = Product::where('group_id',  $product->group_id)->get();
+
+            return view('FrontEnd.product.product_details', compact('group_products','alternatives','shipping_charge', 'product','multiImg','categories','new_products','product_color_en','product_size_en','relatedProduct'));
         }
 
         return view('FrontEnd.product.productNotFound');

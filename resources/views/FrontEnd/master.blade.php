@@ -4,10 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Medic</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('FrontEnd') }}/assect/img/logo/logo.png" type="image/x-icon">
+
     {{-- <----- End Favicon ------> --}}
 
 {{-- ----------------------Style----------------------- --}}
@@ -38,6 +41,7 @@
     {{-- ---------------- Js ----------------- --}}
 
     @include('FrontEnd.include.script')
+    @stack('js')
 
     {{-- ----------------Js End ------------- --}}
 

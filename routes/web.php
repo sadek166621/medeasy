@@ -70,7 +70,7 @@ Route::get('/categories',[CategoryController::class, 'index'])->name('category_l
 
 
 /* =============== Product Search  ============= */
-Route::post('/product/search', [FrontendController::class, 'productSearch'])->name('product.search');
+Route::post('/medicines/search', [FrontendController::class, 'productSearch'])->name('product.search');
 /* =============== Advance Search ============= */
 Route::get('search-product', [FrontendController::class, 'advanceProduct']);
 
@@ -79,7 +79,7 @@ Route::get('/hot-deals', [FrontendController::class, 'hotDeals'])->name('hot_dea
 
 
 /* ===============  Category Wise Product Show  ============= */
-Route::get('/category-product/{slug}',[FrontendController::class, 'CatWiseProduct'])->name('product.category');
+Route::get('/category/{slug}',[FrontendController::class, 'CatWiseProduct'])->name('product.category');
 
 /* ===============  Vendor Wise Product Show  ============= */
 Route::get('/vendor-product/{slug}',[FrontendController::class, 'VendorWiseProduct'])->name('vendor.product');
@@ -128,6 +128,9 @@ Route::get('/login-status/check', [FrontendController::class, 'loginCheck'])->na
 
 /* ============ Cart Show   ============= */
 Route::get('/cart',[CartController::class,'index'])->name('cart.show');
+
+Route::POST('/clear-cart', [CartController::class, 'clearCart'])->name('cart.clear');
+
 /* ============ Cart Get Product   ============= */
 Route::get('/get-cart-product', [CartController::class, 'getCartProduct'])->name('getcart.product');
 /* ============  Cart Increment  ============= */

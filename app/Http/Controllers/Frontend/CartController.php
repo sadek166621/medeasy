@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use App\Models\Category;
 use App\Models\ProductStock;
+use App\Models\Group;
+use App\Models\Unit;
 
 class CartController extends Controller
 {
@@ -26,11 +28,14 @@ class CartController extends Controller
 //        dd($request->all());
         $options = json_decode(stripslashes($request->get('options')));
 
+
         //dd($request);
         $attribute_ids = array();
         $attribute_names = array();
         $attribute_values = array();
         $product = Product::findOrFail($id);
+        $group = Group::find($product->group_id);
+        $unit = Unit::find($product->unit_id);
         //dd($product);
         $carts = Cart::content();
 
@@ -95,6 +100,7 @@ class CartController extends Controller
         //         $price = $product->regular_price;
         //     }
         // }
+
           $data = calculateDiscount($product->id);
     	if($product->is_varient){
 
@@ -112,6 +118,9 @@ class CartController extends Controller
                     'attribute_ids' => $attribute_ids,
                     'attribute_names' => $attribute_names,
                     'attribute_values' => $attribute_values,
+                    'group_name' => $group->name,
+                    'unit_weight' => $product->unit_weight,
+                    'unit' => $unit->name,
                 ],
             ]);
 
@@ -127,6 +136,10 @@ class CartController extends Controller
                     'image' => $product->product_thumbnail,
                     'slug' => $product->slug,
                     'is_varient' => 0,
+                    'group_name' => $group->name,
+                    'unit_weight' => $product->unit_weight,
+                    'unit' => $unit->name,
+
                 ],
             ]);
 
@@ -138,10 +151,10 @@ class CartController extends Controller
     /*=================== Start Mini Cart  Methoed ===================*/
     public function AddMiniCart(){
 
+        $product_group = [];
         $carts = Cart::content();
         $cartQty = Cart::count();
         $cartTotal = Cart::total();
-
         return response()->json(array(
             'carts' => $carts,
             'cartQty' => $cartQty,
@@ -256,4 +269,13 @@ class CartController extends Controller
     } // end method
 
     /* ================= Start Destroy Method ============== */
+
+    public function clearCart()
+    {
+        // Clear all products from the cart
+        Cart::destroy();
+
+        // Return success response
+        return response()->json(['success' => true]);
+    }
 }

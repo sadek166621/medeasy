@@ -12,6 +12,8 @@
     <script src="{{ asset('FrontEnd') }}/assect/js/xzoom.js"></script>
     <script src="{{ asset('FrontEnd') }}/assect/js/magnific-popup.js"></script>
     <script src="{{ asset('FrontEnd') }}/assect/js/setup.js"></script>
+    <script src="{{ asset('FrontEnd') }}/assect/js/sweetalert2@11.js"></script>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -663,12 +665,10 @@
             var product_name = $('#pname').val();
             var id = $('#product_id').val();
             var price = $('#product_price').val();
-            var color = $('#color option:selected').val();
-            var size = $('#size option:selected').val();
             var quantity = $('#qty').val();
             var varient = $('#pvarient').val();
 
-            console.log(price);
+            console.log(product_name, id, price,  quantity, varient  );
             if (checkNotSelected == 1) {
                 $('#qty_alert').html('');
                 //$('#attribute_alert').html(checkAlertHtml);

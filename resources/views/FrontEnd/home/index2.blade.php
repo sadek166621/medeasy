@@ -199,16 +199,16 @@
                                             </div>
                                         @elseif($product->is_varient == 1)
                                             <div class="d-flex justify-content-between mx-lg-2 my-1">
-                                                <button type="submit" id="{{ $product->id }}" onclick="window.location='{{ URL::route('product-details',$product->slug); }}'" class="buy_now">Buy Now</button>
-                                                <button type="submit" id="{{ $product->id }}" onclick="window.location='{{ URL::route('product-details',$product->slug); }}'" class="add_to_cart">Add to Cart</button>
+                                                <button type="submit" id="{{ $product->id }}" onclick="window.location='{{ URL::route('product.details',$product->slug); }}'" class="buy_now">Buy Now</button>
+                                                <button type="submit" id="{{ $product->id }}" onclick="window.location='{{ URL::route('product.details',$product->slug); }}'" class="add_to_cart">Add to Cart</button>
                                             </div>
                                         @else
                                             <div class="d-flex justify-content-between mx-lg-2 my-1">
                                                 <input type="hidden" id="pfrom" value="direct">
                                                 <input type="hidden" id="product_product_id" value="{{ $product->id }}" min="1">
                                                 <input type="hidden" id="{{ $product->id }}-product_pname" value="{{ $product->name_en }}">
-                                                <button type="submit" onclick="addToCartDirect({{ $product->id }})" class="buy_now">Buy Now</button>
-                                                <button type="submit" onclick="buyNow({{ $product->id }})" class="add_to_cart">Add to Cart</button>
+                                                <button type="submit"  onclick="buyNow({{ $product->id }})" class="buy_now">Buy Now</button>
+                                                <button type="submit" onclick="addToCartDirect({{ $product->id }})" class="add_to_cart">Add to Cart</button>
                                             </div>
                                         @endif
                                     </div>

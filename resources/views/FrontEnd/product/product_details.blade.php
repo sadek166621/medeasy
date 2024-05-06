@@ -3,43 +3,8 @@
 <section class="option-slider container-fluid mt-lg-4">
     <div class="row">
         <!--Left Side Menu Start -->
-        <div class="col-lg-3">
-            <div class="sidemenu d-none d-lg-block ">
-                <ul class="py-1">
-                    <h5 class="ps-4 fw-semibold">Categories</h5>
-                    <hr>
-                    <li class="py-2"><a href="category-page.html"><img src="{{asset('FrontEnd')}}/assect/img/icon/drugs.webp" alt="">
-                            OTC
-                            Medicine
-                            <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="py-2"><a href="category-page.html"><img src="{{asset('FrontEnd')}}/assect/img/icon/woman.webp" alt="">
-                            Women's
-                            Choice <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="py-2"><a href="category-page.html"><img src="{{asset('FrontEnd')}}/assect/img/icon/contraceptive.webp"
-                                alt="">
-                            Sexual Wellness <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="py-2"><a href="category-page.html"><img src="{{asset('FrontEnd')}}/assect/img/icon/Diabetics-Care.webp"
-                                alt="">
-                            Diabetic Care <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="py-2"><a href="category-page.html"><img src="{{asset('FrontEnd')}}/assect/img/icon/baby-boy.webp"
-                                alt="">
-                            Baby Care
-                            <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="py-2"><a href="category-page.html"><img
-                                src="{{asset('FrontEnd')}}/assect/img/icon/dental_care_1SkbT7S.webp" alt="">
-                            Dental Care <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="py-2"><a href="category-page.html"><img src="{{asset('FrontEnd')}}/assect/img/icon/Personal-Care.webp"
-                                alt="">
-                            Personal Care <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="py-2"><a href="category-page.html"><img src="{{asset('FrontEnd')}}/assect/img/icon/medical device.webp"
-                                alt="">
-                            Devices <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="py-2"><a href="category-page.html"><img
-                                src="{{asset('FrontEnd')}}/assect/img/icon/medical-prescription.webp" alt="">
-                            Prescription Medicine <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                </ul>
-            </div>
-        </div>
+        @include('FrontEnd.include.side-cat')
+
         <!-- Left Side Menu End -->
 
         <!-- Right Side Start -->
@@ -49,42 +14,111 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="product-thumbnail">
-                            <img src="{{asset('FrontEnd')}}/assect/img/product/napa.webp" alt="">
+                            <img src="{{asset($product->product_thumbnail)}}" alt="">
                         </div>
                     </div>
 
                     <div class="col-md-5 mt-4 mt-lg-0">
+                        <?php $discount = calculateDiscount($product->id) ?>
+                        <input type="hidden" id="product_id" value="{{ $product->id }}"  min="1">
+
+                        <input type="hidden" id="pname" value="{{ $product->name_en }}">
+
+                        <input type="hidden" id="product_price" value="{{ $discount['discount'] }}">
+
+                        <input type="hidden" id="minimum_buy_qty" value="{{ $product->minimum_buy_qty }}" >
+                        <input type="hidden" id="stock_qty" value="{{ $product->stock_qty }}">
+
+                        <input type="hidden" id="pvarient" value="">
+
+                        <input type="hidden" id="buyNowCheck" value="0">
+                        <input type="hidden" name="" id="discount_amount" value="{{$product->regular_price - $discount['discount']}}">
                         <div class="product-description border p-3">
                             <div>
-                                <h2 class="product-title">Napa <span>500 mg</span></h2>
-                                <p class="product-type">Tablet</p>
-                                <a href="#" class="generic-name">Paracetamol</a>
-                                <p class="company-name">Beximco Pharmaceuticals Ltd.</p>
-                                <p class="main-price"><span>৳ 1.20</span> 10% off</p>
-                                <p class="product-price">Best Price: <span>৳ 1.08</span> <span
-                                        class="quantity">/Piece</span></p>
+                                <h2 class="product-title">{{ $product->name_en }} <span>{{ $product->unit_weight }} {{ $product->unit->name }}</span></h2>
+                                <p class="product-type">{{ $product->type->name }}</p>
+                                <a href="#" class="generic-name">{{ $product->group->name }}</a>
+                                <p class="company-name">{{ $product->brand->name_en }}</p>
+                                <div>
+                                    @if($product->discount_price != 0)
+                                <p class="main-price">
+                                    <span id=main_price> ৳{{$product->regular_price}}</span>
+                                    {{$discount['text']}}
+                                </p>
+                                @endif
+                                <p class="product-price">Best Price: ৳<span id=product_current_price>{{$discount['discount']}}</span>/<span
+                                class="quantity" id=variant_type>Piece</span></p>
+                                </div>
                             </div>
                             <div>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Piece</option>
-                                    <option value="1">1's Strip</option>
-                                    <option value="2">5's Strip</option>
-                                    <option value="3">10's Strip</option>
+
+                                {{-- @if ($product->is_varient == 1)
+                                @php
+                                    $variants = App\Models\ProductStock::where('product_id', $product->id)->get();
+                                    // dd($variants);
+                                @endphp
+                                <select class="form-select" id="variant" aria-label="Default select example" onchange="selectAttribute('{{ $attribute->attribute_id }}{{ $attr->name }}', '{{ $value }}', '{{ $product->id }}', '{{ $i }}')"
+                                    name="option_{{$i}}>
+                                    @foreach ($variants as $key=> $variant)
+                                    <option value="{{ $variant->varient }}" {{ $key == 0 ? 'selected':'' }}>{{ $variant->varient }}</option>
+                                    @endforeach
+
+
                                 </select>
+                                @endif --}}
+                                <form id="choice_form">
+                                    <div class="row " id="choice_attributes">
+                                        @php
+                                            $variants = App\Models\ProductStock::where('product_id', $product->id)->get();
+                                            // dd($variants);
+                                        @endphp
+                                        @if($product->is_varient)
+                {{--                            @php dd($product->attribute_values->attribute_id)  @endphp--}}
+                                            @php $i=0; @endphp
+                                            @foreach(json_decode($product->attribute_values) as $attribute)
+                                                @php
+                                                    $attr = get_attribute_by_id($attribute->attribute_id);
+                                                    $i++;
+                //                                    dd($attribute->attribute_id, $attr->name, $attribute->values[0], $product->id, 1)
+                                                @endphp
+                                                <input type="hidden" name="" onload="selectAttribute('{{$attribute->attribute_id}}', '{{$attr->name}}', '{{$attribute->values[0]}}', '{{$product->id}}', '1')">
+                                                <div class="attr-detail attr-size mb-3 col-12">
+                                                    <strong class="mr-10">{{ $attr->name }}: </strong>
+                                                    <input type="hidden" name="attribute_ids[]" id="attribute_id_{{ $i }}" value="{{ $attribute->attribute_id }}">
+                                                    <input type="hidden" name="attribute_names[]" id="attribute_name_{{ $i }}" value="{{ $attr->name }}">
+                                                    <input type="hidden" id="attribute_check_{{ $i }}" value="0">
+                                                    <input type="hidden" id="attribute_check_attr_{{ $i }}" value="0">
+                                                    <div class="list-filter size-filter font-p">
+                                                        <select class="form-select" id="variant" aria-label="Default select example"
+                                                            name="option_{{$i}}>
+                                                            @foreach ($variants as $key=> $variant)
+                                                            <option onchange="selectAttribute('{{ $attribute->attribute_id }}{{ $attr->name }}', '{{ $variant }}', '{{ $product->id }}', '{{ $i }}')" value="{{ $variant->varient }}" {{ $key == 0 ? 'selected':'' }}>{{ $variant->varient }}</option>
+                                                            @endforeach
+
+                                                        </select>
+                                                        <input type="hidden" name="attribute_options[]" id="{{ $attribute->attribute_id }}{{ $attr->name }}" class="attr_value_{{ $i }}">
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <input type="hidden" id="total_attributes" value="{{ count(json_decode($product->attribute_values)) }}">
+                                        @endif
+                                    </div>
+                                </form>
+
                             </div>
 
                             <div class="qty-container">
                                 <button class="qty-btn-minus" type="button"><i
                                         class="fa-solid fa-minus"></i></button>
-                                <input type="text" name="qty" value="0" class="input-qty input-rounded" />
+                                <input type="text" name="quantity" value="{{$product->minimum_buy_qty}}" min="{{$product->minimum_buy_qty}}" id="qty" class="input-qty input-rounded" />
                                 <button class="qty-btn-plus" type="button"><i
                                         class="fa-solid fa-plus"></i></button>
                             </div>
 
                             <div class="text-center">
-                                <button type="submit" class="product_page_buy_now" type="button">Buy
-                                    Now</button>
-                                <button type="submit" class="product_page_add_to_cart" type="button">Add to
+                                {{-- <button type="submit" class="product_page_buy_now" type="button">Buy
+                                    Now</button> --}}
+                                <button type="submit" onclick="test()" class="product_page_add_to_cart" style="width: 100%;" type="button">Add to
                                     cart</button>
                             </div>
                         </div>
@@ -97,11 +131,12 @@
             <section id="otcMedicine" class="products container owl-carousel owl-theme owl-loaded my-5">
                 <div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="fw-semibold">OTC Medicine</h5>
+                        <h5 class="fw-semibold">Alternatives</h5>
                         <a class="btn-primary" href="#">See All</a>
                     </div>
                     <div class="owl-stage-outer">
                         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 owl-stage g-3">
+                            @foreach ($alternatives as $alternative )
                             <div class="col owl-item">
                                 <div class="card h-100">
                                     <div class="offer"> 10% off</div>
@@ -122,148 +157,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col owl-item">
-                                <div class="card h-100">
-                                    <div class="offer"> 10% off</div>
-                                    <a href="#"> <img src="{{asset('FrontEnd')}}/assect/img/product/monas.webp" class="card-img-top"
-                                            alt="Products Image"></a>
-                                    <div class="card-body">
-                                        <a class="product-name" href="#">Monas <span>10 mg</span></a>
-                                        <p class="product-type">Tablet</p>
-                                        <a href="#" class="generic-name">Montelukast</a>
-                                        <p class="company-name">ACME Laboratories Ltd.</p>
-                                    </div>
-                                    <div class="product-price">
-                                        <p>৳ 10.8 <span class="main-price">৳ 12</span></p>
-                                    </div>
-                                    <div class="d-flex justify-content-between mx-lg-2 my-1">
-                                        <button type="submit" class="buy_now">Buy Now</button>
-                                        <button type="submit" class="add_to_cart">Add to Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col owl-item">
-                                <div class="card h-100">
-                                    <div class="offer"> 10% off</div>
-                                    <a href="#"> <img src="{{asset('FrontEnd')}}/assect/img/product/surgel.webp" class="card-img-top"
-                                            alt="Products Image"></a>
-                                    <div class="card-body">
-                                        <a class="product-name" href="#">Sergel <span>20 mg</span></a>
-                                        <p class="product-type">Capsule</p>
-                                        <a href="#" class="generic-name">Esomeprazole Magnesium Trihydrate</a>
-                                        <p class="company-name">Square Pharmaceuticals PLC.</p>
-                                    </div>
-                                    <div class="product-price">
-                                        <p>৳ 6.3 <span class="main-price">৳ 7</span></p>
-                                    </div>
-                                    <div class="d-flex justify-content-between mx-lg-2 my-1">
-                                        <button type="submit" class="buy_now">Buy Now</button>
-                                        <button type="submit" class="add_to_cart">Add to Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col owl-item">
-                                <div class="card h-100">
-                                    <div class="offer"> 10% off</div>
-                                    <a href="#"> <img src="{{asset('FrontEnd')}}/assect/img/product/cevit.webp" class="card-img-top"
-                                            alt="Products Image"></a>
-                                    <div class="card-body">
-                                        <a class="product-name" href="#">Ceevit <span>250 mg</span></a>
-                                        <p class="product-type">Chewable Tablet</p>
-                                        <a href="#" class="generic-name">Vitamin C [Ascorbic acid]</a>
-                                        <p class="company-name">Square Pharmaceuticals PLC.</p>
-
-                                    </div>
-                                    <div class="product-price">
-                                        <p class="">৳ 1.71 <span class="main-price">৳ 1.90</span></p>
-                                    </div>
-                                    <div class="text-center mx-2 my-1">
-                                        <div class="out-of-stock">Out Of Stock</div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col owl-item">
-                                <div class="card h-100">
-                                    <div class="offer"> 10% off</div>
-                                    <a href="#"> <img src="{{asset('FrontEnd')}}/assect/img/product/napa.webp" class="card-img-top"
-                                            alt="Products Image"></a>
-                                    <div class="card-body">
-                                        <a class="product-name" href="#">Napa <span>500 mg</span></a>
-                                        <p class="product-type">Tablet</p>
-                                        <a href="#" class="generic-name">Paracetamol</a>
-                                        <p class="company-name">Beximco Pharmaceuticals Ltd.</p>
-                                    </div>
-                                    <div class="product-price">
-                                        <p>৳ 1.08 <span class="main-price">৳ 1.20</span></p>
-                                    </div>
-                                    <div class="d-flex justify-content-between mx-lg-2 my-1">
-                                        <button type="submit" class="buy_now">Buy Now</button>
-                                        <button type="submit" class="add_to_cart">Add to Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col owl-item">
-                                <div class="card h-100">
-                                    <div class="offer"> 10% off</div>
-                                    <a href="#"> <img src="{{asset('FrontEnd')}}/assect/img/product/monas.webp" class="card-img-top"
-                                            alt="Products Image"></a>
-                                    <div class="card-body">
-                                        <a class="product-name" href="#">Monas <span>10 mg</span></a>
-                                        <p class="product-type">Tablet</p>
-                                        <a href="#" class="generic-name">Montelukast</a>
-                                        <p class="company-name">ACME Laboratories Ltd.</p>
-                                    </div>
-                                    <div class="product-price">
-                                        <p>৳ 10.8 <span class="main-price">৳ 12</span></p>
-                                    </div>
-                                    <div class="d-flex justify-content-between mx-lg-2 my-1">
-                                        <button type="submit" class="buy_now">Buy Now</button>
-                                        <button type="submit" class="add_to_cart">Add to Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col owl-item">
-                                <div class="card h-100">
-                                    <div class="offer"> 10% off</div>
-                                    <a href="#"> <img src="{{asset('FrontEnd')}}/assect/img/product/surgel.webp" class="card-img-top"
-                                            alt="Products Image"></a>
-                                    <div class="card-body">
-                                        <a class="product-name" href="#">Sergel <span>20 mg</span></a>
-                                        <p class="product-type">Capsule</p>
-                                        <a href="#" class="generic-name">Esomeprazole Magnesium Trihydrate</a>
-                                        <p class="company-name">Square Pharmaceuticals PLC.</p>
-                                    </div>
-                                    <div class="product-price">
-                                        <p>৳ 6.3 <span class="main-price">৳ 7</span></p>
-                                    </div>
-                                    <div class="d-flex justify-content-between mx-lg-2 my-1">
-                                        <button type="submit" class="buy_now">Buy Now</button>
-                                        <button type="submit" class="add_to_cart">Add to Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col owl-item">
-                                <div class="card h-100">
-                                    <div class="offer"> 10% off</div>
-                                    <a href="#"> <img src="{{asset('FrontEnd')}}/assect/img/product/cevit.webp" class="card-img-top"
-                                            alt="Products Image"></a>
-                                    <div class="card-body">
-                                        <a class="product-name" href="#">Ceevit <span>250 mg</span></a>
-                                        <p class="product-type">Chewable Tablet</p>
-                                        <a href="#" class="generic-name">Vitamin C [Ascorbic acid]</a>
-                                        <p class="company-name">Square Pharmaceuticals PLC.</p>
-
-                                    </div>
-                                    <div class="product-price">
-                                        <p class="">৳ 1.71 <span class="main-price">৳ 1.90</span></p>
-                                    </div>
-                                    <div class="text-center mx-2 my-1">
-                                        <div class="out-of-stock">Out Of Stock</div>
-                                    </div>
-
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -440,6 +334,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="product_regular_price" value="{{ $product->regular_price }}">
             </section>
             <!-- Service System Part End -->
         </div>
@@ -448,3 +343,57 @@
 </section>
 
 @endsection
+@push('js')
+<script>
+    $(document).ready(function () {
+        var variant = $('#variant').val();
+        var product_id = {{ $product->id }};
+        $.ajax({
+
+            type: 'GET',
+                url: '/varient-price/'+ product_id +'/'+variant,
+                dataType:'json',
+
+                success:function(response){
+                    console.log(response);
+                    $('#product_price').text(response.price);
+                    $('#variant_type').text(variant);
+                    $('#discount_amount').val(response.price)
+
+                }
+
+        });
+    });
+    $('#variant').change(function(){
+        var variant = $('#variant').val();
+        var product_id = {{ $product->id }};
+        $.ajax({
+
+            type: 'GET',
+                url: '/varient-price/'+ product_id +'/'+variant,
+                dataType:'json',
+
+                success:function(response){
+                    console.log(response);
+                    $('#product_current_price').text(response.price);
+                    $('#variant_type').text(variant);
+                    $('#discount_amount').val(response.price)
+                }
+
+        });
+    })
+
+    $('.qty-btn-plus').click(function(){
+        var product_quantity = $('#qty').val();
+        var product_price = parseFloat($('#discount_amount').val());
+        $('#product_current_price').text(product_quantity * product_price);
+    })
+
+    $('.qty-btn-minus').click(function(){
+        var product_quantity = $('#qty').val();
+        var product_price = parseFloat($('#discount_amount').val());
+        $('#product_current_price').text(product_quantity * product_price);
+    })
+
+</script>
+@endpush
