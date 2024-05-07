@@ -447,7 +447,7 @@
 
 
 
-		        <div class="card">
+		        {{-- <div class="card">
 		        	<div class="card-header" style="background-color: #fff !important;">
 						<h3 style="color: #4f5d77 !important">Short Description</h3>
 					</div>
@@ -465,7 +465,7 @@
 	                        <!-- Description End -->
 		        		</div>
 		        	</div>
-		        </div>
+		        </div> --}}
 		        <div class="card">
 		        	<div class="card-header" style="background-color: #fff !important;">
 						<h3 style="color: #4f5d77 !important">Detailed Description</h3>
@@ -498,7 +498,7 @@
                             <input type="file" name="product_thumbnail" class="form-control" id="product_thumbnail" onChange="mainThamUrl(this)">
 							<img src="{{ asset($product->product_thumbnail) }}" width="100" height="100" class="p-2" id="mainThmb">
 						</div><br><br>
-						<div class="col-md-12 mb-3">
+						{{-- <div class="col-md-12 mb-3">
 		                	<div class="box-header mb-3 d-flex">
 						        <h4 class="box-title">Product Multiple Image <strong>Update:</strong></h4>
 						    </div>
@@ -527,7 +527,7 @@
 									</div>
 					         	</div>
 						   </div>
-		                </div>
+		                </div> --}}
 						<!-- Porduct Image End -->
 		        		<!-- Checkbox Start -->
                         <div class="mb-4">

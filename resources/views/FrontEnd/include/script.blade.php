@@ -518,7 +518,8 @@
         }
 
         function selectAttribute(id, value, pid, position){
-            // console.log(id, value, position, pid);
+
+            console.log(id, value, position, pid);
             $('#'+id).val(value);
             var checkVal = $('#attribute_check_'+position).val();
             var checkProduct = $('#attribute_check_attr_'+position).val();
@@ -557,10 +558,10 @@
                         var discount = $('#discount_amount').val();
                         console.log(discount);
                         if(discount>0){
-                            console.log(discount ,data.price-discount);
-                            $('.product_price').text('৳'+(data.price-discount));
+                            console.log(discount ,data.price);
+                            $('.product_price').text('৳'+(data.price));
                             $('.old-price').text('৳'+data.price);
-                            $('#product_price').val(data.price-discount);
+                            $('#product_price').val(data.price);
                         }else{
                             $('.current-price').text('৳'+data.price);
                             $('.old-price').text('৳'+data.price);
@@ -650,6 +651,7 @@
             var checkAlertHtml = '';
             for (var i = 1; i <= total_attributes; i++) {
                 var checkSelected = parseInt($('#attribute_check_' + i).val());
+                alert(checkSelected);
                 if (checkSelected == 0) {
                     checkNotSelected = 1;
                     checkAlertHtml += `<div class="attr-detail mb-5">
@@ -668,7 +670,7 @@
             var quantity = $('#qty').val();
             var varient = $('#pvarient').val();
 
-            console.log(product_name, id, price,  quantity, varient  );
+            console.log('test '+ product_name, id, price,  quantity, varient  );
             if (checkNotSelected == 1) {
                 $('#qty_alert').html('');
                 //$('#attribute_alert').html(checkAlertHtml);
@@ -740,8 +742,8 @@
                 dataType: 'json',
                 data: {
                     _token: '{!! csrf_token() !!}',
-                    color: color,
-                    size: size,
+                    // color: color,
+                    // size: size,
                     quantity: quantity,
                     product_name: product_name,
                     product_price: price,

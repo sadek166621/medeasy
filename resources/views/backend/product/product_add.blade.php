@@ -377,7 +377,7 @@
 		        	<div class="card-header" style="background-color: #fff !important;">
 						<h3 style="color: #4f5d77 !important">Short Description</h3>
 					</div>
-		        	<div class="card-body">
+		        	{{-- <div class="card-body">
 		        		<div class="row">
 		        			<!-- Description Start -->
 	                        <div class="col-md-12 mb-4">
@@ -390,7 +390,7 @@
 	                        </div>
 	                        <!-- Description End -->
 		        		</div>
-		        	</div>
+		        	</div> --}}
 		        </div>
 		        <div class="card">
 		        	<div class="card-header" style="background-color: #fff !important;">
@@ -427,12 +427,12 @@
 								<p class="text-danger">{{$message}}</p>
 							@enderror
 						</div>
-						<div class="mb-4">
+						{{-- <div class="mb-4">
 							<label for="multiImg" class="col-form-label" style="font-weight: bold;">Product Gallery Image:</label>
 							<input type="file" name="multi_img[]" class="form-control" multiple="" id="multiImg" >
 							<div class="row  p-2" id="preview_img">
 							</div>
-						</div>
+						</div> --}}
 						<!-- Porduct Image End -->
 		        		<!-- Checkbox Start -->
                         <div class="mb-4 ">

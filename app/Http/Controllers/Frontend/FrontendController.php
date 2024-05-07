@@ -521,11 +521,13 @@ class FrontendController extends Controller
 
     public function applycoupon(Request $request)
     {
+
     $coupon = Coupon::where('coupon_code', $request->apply_coupon)
         ->where('status', 1)
         ->where('total_use_limit', '>', 0) // Ensure total_use_limit is greater than 0
         ->first();
-
+        // return response()->json($coupon);
+        // dd($coupon);
         if ($coupon) {
             // Check if the coupon has expired
             $now = Carbon::now();

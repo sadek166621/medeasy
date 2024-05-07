@@ -165,7 +165,10 @@
                     </div>
                     <div class="owl-stage-outer">
                         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 owl-stage g-3">
-                            @php $cat_products = get_tab_category_products($category->slug) @endphp
+                            @php $cat_products = get_tab_category_products($category->slug)
+                            
+                            @endphp
+
                             @if(count($cat_products) > 0)
                             @php $i=1; @endphp
                                 @foreach($cat_products as $product)

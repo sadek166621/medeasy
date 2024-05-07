@@ -83,7 +83,8 @@
                             <textarea name="address" id="address" class="form-control" placeholder="Address" required>{{ old('address') }}</textarea>
                             @error('address')
                                 <p class="text-danger">{{$message}}</p>
-                            @enderror                        </div>
+                            @enderror
+                        </div>
                         {{-- <div class="col-md-6 form-group">
                             <label>Country</label>
                             <select class="form-control">

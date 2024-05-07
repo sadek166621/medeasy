@@ -115,7 +115,7 @@ class CategoryUtility
                         unlink($category->image);
                     }
                 } catch (Exception $e) {
-                    
+
                 }
                 $category->delete();
             }
@@ -129,7 +129,7 @@ class CategoryUtility
             //   ->update(['parent_id' => 0]);
 
             //CategoryUtility::move_children_to_parent($category->id);
-            
+
         }
 
     }

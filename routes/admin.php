@@ -207,7 +207,7 @@ Route::middleware('adminAccess')->group(function(){
     });
 
     // Admin Category All Routes
-    Route::prefix('category')->group(function(){
+    // Route::prefix('category')->group(function(){
 
         Route::get('/index', [CategoryController::class, 'index'])->name('category.index');
         Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
@@ -222,7 +222,7 @@ Route::middleware('adminAccess')->group(function(){
 
         Route::get('/category_feature_status_change/{id}', [CategoryController::class, 'changeFeatureStatus'])->name('category.changeFeatureStatus');
 
-    });
+    // });
 
     Route::prefix('type')->group(function(){
 

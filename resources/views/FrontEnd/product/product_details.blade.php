@@ -21,6 +21,9 @@
                     <div class="col-md-5 mt-4 mt-lg-0">
                         <?php $discount = calculateDiscount($product->id) ?>
                         <input type="hidden" id="product_id" value="{{ $product->id }}"  min="1">
+                        <input type="hidden" id="discount_type" value="{{ $product->discount_type }}"  min="1">
+                        <input type="hidden" id="discount" value="{{ $product->discount_price }}"  min="0">
+                        <input type="hidden" id="discounted_price" value=""  min="0">
 
                         <input type="hidden" id="pname" value="{{ $product->name_en }}">
 
@@ -28,8 +31,6 @@
 
                         <input type="hidden" id="minimum_buy_qty" value="{{ $product->minimum_buy_qty }}" >
                         <input type="hidden" id="stock_qty" value="{{ $product->stock_qty }}">
-
-                        <input type="hidden" id="pvarient" value="">
 
                         <input type="hidden" id="buyNowCheck" value="0">
                         <input type="hidden" name="" id="discount_amount" value="{{$product->regular_price - $discount['discount']}}">
@@ -72,27 +73,44 @@
                                             $variants = App\Models\ProductStock::where('product_id', $product->id)->get();
                                             // dd($variants);
                                         @endphp
+                                        <input type="hidden" id="pvarient" value="{{ $variants[0]->varient }}">
                                         @if($product->is_varient)
                 {{--                            @php dd($product->attribute_values->attribute_id)  @endphp--}}
                                             @php $i=0; @endphp
-                                            @foreach(json_decode($product->attribute_values) as $attribute)
+                                            @php
+                                                $firstAttr = '';
+                                                $firstVal = '';
+                                                $position = 1;
+                                            @endphp
+                                            @foreach(json_decode($product->attribute_values) as $key => $attribute)
                                                 @php
                                                     $attr = get_attribute_by_id($attribute->attribute_id);
+                                                    if($key==0){
+                                                        $firstAttr = $attribute->attribute_id.$attr->name;
+                                                    }
                                                     $i++;
                 //                                    dd($attribute->attribute_id, $attr->name, $attribute->values[0], $product->id, 1)
                                                 @endphp
-                                                <input type="hidden" name="" onload="selectAttribute('{{$attribute->attribute_id}}', '{{$attr->name}}', '{{$attribute->values[0]}}', '{{$product->id}}', '1')">
+                                                {{-- <input type="hidden" name="" onload="selectAttribute('{{$attribute->attribute_id}}', '{{$attr->name}}', '{{$attribute->values[0]}}', '{{$product->id}}', '1')"> --}}
                                                 <div class="attr-detail attr-size mb-3 col-12">
                                                     <strong class="mr-10">{{ $attr->name }}: </strong>
                                                     <input type="hidden" name="attribute_ids[]" id="attribute_id_{{ $i }}" value="{{ $attribute->attribute_id }}">
                                                     <input type="hidden" name="attribute_names[]" id="attribute_name_{{ $i }}" value="{{ $attr->name }}">
-                                                    <input type="hidden" id="attribute_check_{{ $i }}" value="0">
-                                                    <input type="hidden" id="attribute_check_attr_{{ $i }}" value="0">
+                                                    <input type="hidden" id="attribute_check_{{ $i }}" value="1">
+                                                    <input type="hidden" id="attribute_check_attr_{{ $i }}" value="1">
                                                     <div class="list-filter size-filter font-p">
+
                                                         <select class="form-select" id="variant" aria-label="Default select example"
-                                                            name="option_{{$i}}>
-                                                            @foreach ($variants as $key=> $variant)
-                                                            <option onchange="selectAttribute('{{ $attribute->attribute_id }}{{ $attr->name }}', '{{ $variant }}', '{{ $product->id }}', '{{ $i }}')" value="{{ $variant->varient }}" {{ $key == 0 ? 'selected':'' }}>{{ $variant->varient }}</option>
+                                                            name="option_{{$i}}" onchange="selectAttribute('{{ $attribute->attribute_id }}{{ $attr->name }}', this.options[this.selectedIndex].value, '{{ $product->id }}', '{{ $i }}')">
+                                                            @foreach ($attribute->values as $key=> $value)
+                                                                @if ($key == 0)
+                                                                    <option value="{{ $value }}" selected>{{$value}}</option>
+                                                                    @php
+                                                                        $firstVal = $value;
+                                                                    @endphp
+                                                                @else
+                                                                    <option value="{{ $value }}" >{{$value}}</option>
+                                                                @endif
                                                             @endforeach
 
                                                         </select>
@@ -100,6 +118,9 @@
                                                     </div>
                                                 </div>
                                             @endforeach
+                                            <input type="hidden" id="firstSelectAttr" value="{{ $firstAttr }}">
+                                            <input type="hidden" id="firstSelectAttrVal" value="{{ $firstVal }}">
+                                            <input type="hidden" id="firstSelectAttrPosition" value="{{ $position }}">
                                             <input type="hidden" id="total_attributes" value="{{ count(json_decode($product->attribute_values)) }}">
                                         @endif
                                     </div>
@@ -348,6 +369,11 @@
     $(document).ready(function () {
         var variant = $('#variant').val();
         var product_id = {{ $product->id }};
+        var discount_type = parseInt($('#discount_type').val());
+        var discount = parseFloat($('#discount').val());
+        var current_price = 0;
+        var product_quantity = $('#qty').val();
+        console.log(discount_type, discount);
         $.ajax({
 
             type: 'GET',
@@ -355,18 +381,36 @@
                 dataType:'json',
 
                 success:function(response){
-                    console.log(response);
-                    $('#product_price').text(response.price);
+                    // console.log(response);
+
+                    $('#main_price').text(response.price);
+                     if(discount_type == 1){
+                        current_price = response.price - discount;
+                     }
+                     else{
+                        current_price = response.price - (response.price*discount/100);
+                     }
+                    $('#product_current_price').text(current_price *product_quantity);
                     $('#variant_type').text(variant);
-                    $('#discount_amount').val(response.price)
+                    $('#discount_amount').val(current_price);
 
                 }
 
         });
+
+        var paramAttr = $('#firstSelectAttr').val();
+        var paramAttrVal = $('#firstSelectAttrVal').val();
+        var paramAttrPosition = $('#firstSelectAttrPosition').val();
+        selectAttribute(paramAttr, paramAttrVal, product_id, paramAttrPosition);
     });
     $('#variant').change(function(){
         var variant = $('#variant').val();
         var product_id = {{ $product->id }};
+        var discount_type = parseInt($('#discount_type').val());
+        var discount = parseFloat($('#discount').val());
+        var current_price = 0;
+        var product_quantity = $('#qty').val();
+        console.log(discount_type, discount);
         $.ajax({
 
             type: 'GET',
@@ -374,10 +418,20 @@
                 dataType:'json',
 
                 success:function(response){
-                    console.log(response);
-                    $('#product_current_price').text(response.price);
+                    // console.log(response);
+
+
+
+                    $('#main_price').text(response.price);
+                     if(discount_type == 1){
+                        current_price = response.price - discount;
+                     }
+                     else{
+                        current_price = response.price - (response.price*discount/100);
+                     }
+                    $('#product_current_price').text(current_price *product_quantity);
                     $('#variant_type').text(variant);
-                    $('#discount_amount').val(response.price)
+                    $('#discount_amount').val(current_price)
                 }
 
         });

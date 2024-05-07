@@ -347,8 +347,8 @@
                                          <p>৳${value.subtotal}</p>
                                      </div>
                                      <div class="d-flex mt-3">
-                                         <button class="btn btn-primary btn-lg d-block fw-semibold w-100 py-2">Proceed
-                                             To Checkout</button>
+                                         <a href="${base_url}/checkout" class="btn btn-primary btn-lg d-block fw-semibold w-100 py-2">Proceed
+                                             To Checkout</a>
                                      </div>
                                  </div>`
                         });

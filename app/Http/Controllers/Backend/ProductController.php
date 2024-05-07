@@ -65,7 +65,6 @@ class ProductController extends Controller
         $request->validate([
             'name_en'               => 'required|max:150',
             'regular_price'         => 'required|numeric',
-            'short_description_en'  => 'required|string',
             'description_en'        => 'required|string',
             'category_id'           => 'required|integer',
             'brand_id'              => 'nullable|integer',
@@ -339,7 +338,6 @@ class ProductController extends Controller
             'discount_price'        => 'required|numeric',
             'regular_price'         => 'required|numeric',
             'stock_qty'             => 'required|integer',
-            'short_description_en'  => 'required|string',
             'description_en'        => 'required|string',
             'category_id'           => 'required|integer',
             'brand_id'              => 'nullable|integer',
