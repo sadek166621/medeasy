@@ -154,7 +154,7 @@
         <div>
             <nav class='mobile'>
                 <ul>
-                    <li><a href='index.html'><span><i class="fa-solid fa-house-chimney"></i>
+                    <li><a href='{{ route('home') }}'><span><i class="fa-solid fa-house-chimney"></i>
                             </span><span>Home</span></a></li>
 
                     <li><a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
