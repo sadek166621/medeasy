@@ -108,7 +108,7 @@ class CartController extends Controller
                 'id' => $id,
                 'name' => $request->product_name,
                 'qty' => $request->quantity,
-                'price' => $request->product_price,
+                'price' => (float)$request->product_price,
                 'weight' => 1,
                 'options' => [
                     'image' => $product->product_thumbnail,
@@ -130,7 +130,7 @@ class CartController extends Controller
                 'id' => $id,
                 'name' => $request->product_name,
                 'qty' => $request->quantity,
-                'price' => $data['discount'],
+                'price' => (float)$data['discount'],
                 'weight' => 1,
                 'options' => [
                     'image' => $product->product_thumbnail,

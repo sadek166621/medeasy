@@ -45,7 +45,7 @@
         <div class="desktop-nav">
             <nav id="navbar_top" class="navbar navbar-expand-lg nav-bg">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('FrontEnd') }}/assect/img/logo/logo.png" alt="logo"></a>
+                    <a class="navbar-brand" href="{{ route('home') }}"><img src="{{asset(get_setting('site_logo')->value)}}" alt="logo"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@
                         {{-- <form class="ms-auto d-flex" action="{{ route('product.search')}}" method="Post">
                             @csrf --}}
                             <div class="ms-auto d-flex">
-                                <input class=" form-control search-box search" onfocus="search_result_show()" onblur="search_result_hide()" type="search" placeholder="Search"
+                                <input class=" form-control search-box search" onkeyup="search_result_show()" onblur="search_result_hide()" type="search" placeholder="Search"
                                 aria-label="Search" name="search">
                             <button class="btn search-icon" type=""><i
                                     class="fa-solid fa-magnifying-glass"></i></button>
@@ -99,7 +99,7 @@
         <div class="mobile-nav">
             <nav id="mobile_navbar_top" class="navbar py-2 nav-bg">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="index.html"><img src="{{ asset('FrontEnd') }}/assect/img/logo/logo.png" alt="logo"
+                    <a class="navbar-brand" href="{{ route('home') }}"><img src="{{asset(get_setting('site_logo')->value)}}" alt="logo"
                             style="width: 200px"></a>
 
                     <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
@@ -114,39 +114,25 @@
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
             aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <a href="index.html"><img src="{{ asset('FrontEnd') }}/assect/img/logo/logo.png" alt=""></a>
+                <a href="{{ route('home') }}"><img src="{{asset(get_setting('site_logo')->value)}}" alt=""></a>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav">
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/drugs.webp" alt=""> OTC Medicine
-                            <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/woman.webp" alt=""> Women's
-                            Choice <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/contraceptive.webp" alt="">
-                            Sexual Wellness <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/Diabetics-Care.webp" alt="">
-                            Diabetic Care <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/baby-boy.webp" alt=""> Baby Care
-                            <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/dental_care_1SkbT7S.webp" alt="">
-                            Dental Care <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/Personal-Care.webp" alt="">
-                            Personal Care <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/medical device.webp" alt="">
-                            Devices <span><i class="fa-solid fa-angle-right"></i></span></a></li>
-                    <li class="nav-item py-2"><a class="nav-link" href="category-page.html"><img
-                                src="{{ asset('FrontEnd') }}/assect/img/icon/medical-prescription.webp" alt="">
-                            Prescription Medicine <span><i class="fa-solid fa-angle-right"></i></span></a></li>
+                    @foreach($menu_featured_categories as $category)
+                    <li class="nav-item py-2">
+                        <a class="nav-link" href="{{route('product.category', $category->slug)}}">
+                            <img
+                                src="{{asset($category->image)}}" style="height: 32px; width:32px;" alt=""> {{ $category->name_en }}
+                            <span>
+                                <i class="fa-solid fa-angle-right">
+                                    </i>
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+
                 </ul>
             </div>
         </div>
@@ -154,11 +140,14 @@
 
         <!-- Search Bar Start-->
         <div class="container">
-            <form class="d-flex search-box" role="search">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn search-icon" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
+            {{-- <form class="d-flex search-box" role="search"> --}}
+                <input class="form-control search " id="mobile_search"  type="search" onkeyup="search_result_show()" onblur="search_result_hide()" placeholder="Search" aria-label="Search">
+                {{-- <button class="btn search-icon" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> --}}
+            {{-- </form> --}}
+
         </div>
+        <div class="m-auto searchProducts" style="position: absolute;z-index: 99999; left: 10px; width: 342px"></div>
+
         <!-- Search Bar End-->
 
         <!-- Button Menu Start -->
@@ -173,8 +162,8 @@
                             </span><span>Categories</span></a></li>
 
                     <li><a href='#' data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-                            aria-controls="offcanvasScrolling"><span><i class="fa-solid fa-cart-plus cartQty"></i>
-                                <small>0</small></span>
+                            aria-controls="offcanvasScrolling"><span><i class="fa-solid fa-cart-plus"></i>
+                                <small><span class="cartQty">0</span></small></span>
                             <span>Cart</span></a> </li>
 
                     <li><a href='#'><span><i class="fa-regular fa-user"></i></span>
@@ -202,6 +191,19 @@
                     <div class="p-2" id="miniCart">
 
                     </div>
+                    <div style="margin-bottom: 150px;"></div>
+                                 <!-- Proceed To Check Out Start -->
+                                 <div class="proceed-to mt-5">
+                                     <hr>
+                                     <div class="sub-total-price">
+                                         <p>Total Amount</p>
+                                         <span id="cartSubTotal"></span>
+                                     </div>
+                                     <div class="d-flex mt-3">
+                                         <a href="{{ route('checkout') }}" class="btn btn-primary btn-lg d-block fw-semibold w-100 py-2">Proceed
+                                             To Checkout</a>
+                                     </div>
+                                 </div>
                 </div>
             </div>
         </div>
@@ -286,7 +288,7 @@
                 url: '/product/mini/cart',
                 dataType:'json',
                 success:function(response){
-                    // alert(response);
+                    console.log(response);
                     //checkout();
                     $('span[id="cartSubTotal"]').text(response.cartTotal);
                     $('#cartSubTotalShi').val(response.cartTotal);
@@ -315,14 +317,7 @@
                                                  <span  class="generic-name">${group_name}</span>
                                              </div>
                                              <div class="d-flex mt-2">
-                                                 <div class="me-2">
-                                                     <select class="form-select" aria-label="Default select example">
-                                                         <option selected>Piece</option>
-                                                         <option value="1">1's Strip</option>
-                                                         <option value="2">5's Strip</option>
-                                                         <option value="3">10's Strip</option>
-                                                     </select>
-                                                 </div>
+
                                                  <div class="qty-container">
                                                      <button class="qty-btn-minus" type="button" id="${value.rowId}" onclick="cartDecrement(this.id)"><i
                                                              class="fa-solid fa-minus"></i></button>
@@ -333,24 +328,12 @@
                                                  </div>
                                              </div>
                                          </div>
-                                         <div class="d-flex flex-column">
+                                         <div class="d-flex flex-column" ">
                                              <p class="product-price">৳${value.price}</p>
                                          </div>
                                      </div>
                                  </div>
-                                 <div style="margin-bottom: 150px;"></div>
-                                 <!-- Proceed To Check Out Start -->
-                                 <div class="proceed-to mt-5">
-                                     <hr>
-                                     <div class="sub-total-price">
-                                         <p>Total Amount</p>
-                                         <p>৳${value.subtotal}</p>
-                                     </div>
-                                     <div class="d-flex mt-3">
-                                         <a href="${base_url}/checkout" class="btn btn-primary btn-lg d-block fw-semibold w-100 py-2">Proceed
-                                             To Checkout</a>
-                                     </div>
-                                 </div>`
+                                 `;
                         });
 
                         $('#miniCart').html(miniCart);
@@ -364,6 +347,7 @@
                     }
                 }
             });
+
         }
         /* ============ Function Call ========== */
         miniCart();

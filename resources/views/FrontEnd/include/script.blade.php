@@ -118,14 +118,15 @@
         });
     }
                 function miniCart(){
+
                 $.ajax({
                     type: 'GET',
                     url: '/product/mini/cart',
                     dataType:'json',
                     success:function(response){
-                        // alert(response);
+                        // alert(response.cartTotal);
                         //checkout();
-                        $('span[id="cartSubTotal"]').text(response.cartTotal);
+                        $('#cartSubTotal').text(response.cartTotal);
                         $('#cartSubTotalShi').val(response.cartTotal);
                         $('.cartQty').text(Object.keys(response.carts).length);
                         $('#total_cart_qty').text(Object.keys(response.carts).length);
@@ -175,10 +176,11 @@
         }
 
         $("body").on("keyup", ".search", function(){
-            // alert('ok');
+
             let text = $(".search").val();
             if(text.length == 0){
                 text = $('#mobile_search').val();
+
             }
             console.log(text);
             let category_id = $("#searchCategory").val();
@@ -523,6 +525,8 @@
             $('#'+id).val(value);
             var checkVal = $('#attribute_check_'+position).val();
             var checkProduct = $('#attribute_check_attr_'+position).val();
+            var discount_type = parseInt($('#discount_type').val());
+            var discount = parseFloat($('#discount').val());
             if(checkVal == 1){
                 if(checkProduct == value){
                     $('#attribute_check_'+position).val(0);
@@ -552,20 +556,29 @@
                 url:'/varient-price/'+pid+'/'+varient,
                 dataType:'json',
                 success:function(data){
-                    // console.log(data);
+                    console.log(data);
                     if(data && data != 'na'){
                         //$('.current-price').text('৳'+data);
-                        var discount = $('#discount_amount').val();
-                        console.log(discount);
+                        // var discount = $('#discount_amount').val();
+                        //
+
                         if(discount>0){
+
                             console.log(discount ,data.price);
-                            $('.product_price').text('৳'+(data.price));
+
+                            if(discount_type == 1){
+                                current_price = data.price - discount;
+                            }
+                            else{
+                                current_price = data.price - (data.price*discount/100);
+                            }
+                            $('.product_price').text('৳'+(current_price));
                             $('.old-price').text('৳'+data.price);
-                            $('#product_price').val(data.price);
+                            $('#product_price').val(current_price);
                         }else{
                             $('.current-price').text('৳'+data.price);
                             $('.old-price').text('৳'+data.price);
-                            $('#product_price').val(data.price);
+                            $('#product_price').val(discount);
                         }
                         // console.log($('#product_price').val());
                         $('#pvarient').val(varient);
@@ -626,10 +639,11 @@
                     if(data && data != 'na'){
                         //$('.current-price').text('৳'+data);
                         var discount = $('#discount_amount').val();
+
                         if(discount>0){
                             $('#pprice').text(data.price-discount);
                             $('#oldprice').text('৳'+(data.price));
-                            $('#product_price').val(data.price-discount);
+                            $('#product_price').val(data.price);
                         }else{
                             $('#pprice').text(data.price);
                             $('#product_price').val(data.price);
@@ -651,7 +665,7 @@
             var checkAlertHtml = '';
             for (var i = 1; i <= total_attributes; i++) {
                 var checkSelected = parseInt($('#attribute_check_' + i).val());
-                alert(checkSelected);
+                // alert(checkSelected);
                 if (checkSelected == 0) {
                     checkNotSelected = 1;
                     checkAlertHtml += `<div class="attr-detail mb-5">

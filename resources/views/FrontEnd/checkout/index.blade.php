@@ -114,8 +114,9 @@
                         <div class="billing border">
                             <h5 class="billing-title">Products</h5>
                             <div class="p-4">
+                                @foreach ($carts as $cart)
                                 <div class="select-products">
-                                    @foreach ($carts as $cart)
+
                                     <div class="d-flex align-items-center">
                                         <img class="thumbnail" src="{{ $cart->options->image }}" alt="">
                                         <div class="d-flex flex-column">
@@ -126,8 +127,9 @@
                                     <div class="d-flex justify-content-between mb-1">
                                         <p class="product-price" >৳{{$cart->subtotal}}</p>
                                     </div>
-                                    @endforeach
+
                                 </div>
+                                @endforeach
 {{--
                                 <div class="select-products">
                                     <div class="d-flex align-items-center">

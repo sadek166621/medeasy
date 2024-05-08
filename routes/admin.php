@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\PaymentMethodController;
 use App\Http\Controllers\Backend\PosController;
+use App\Http\Controllers\Backend\ImportController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\RoleController;
@@ -460,6 +461,11 @@ Route::middleware('adminAccess')->group(function(){
     Route::get('order/cancellation/requests', [OrderController::class, 'cancellationRequest'])->name('order.cancellation.requests');
 
 });
+
+
+Route::post('/import-group',[ImportController::class,'importgroup'])->name('import-group');
+Route::post('/import-type',[ImportController::class,'importtype'])->name('import-type');
+
 
 //*==========================End Only Admin Accessible All Routes  ==========================*/
 

@@ -166,7 +166,7 @@
                     <div class="owl-stage-outer">
                         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 owl-stage g-3">
                             @php $cat_products = get_tab_category_products($category->slug)
-                            
+
                             @endphp
 
                             @if(count($cat_products) > 0)
@@ -1617,46 +1617,7 @@
             </section> --}}
             <!-- Prescription Medicine Choice Products End -->
 
-            <!-- Featured Brands Part Start -->
-            <div class="featured-brands container owl-carousel owl-theme owl-loaded my-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-semibold">Featured Brands</h5>
-                    <a class="btn-primary" href="#">See All</a>
-                </div>
-                <div class="owl-stage-outer">
-                    <div class="row owl-stage g-1">
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{ asset('FrontEnd') }}/assect/img/brand/square ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{ asset('FrontEnd') }}/assect/img/brand/smc ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{ asset('FrontEnd') }}/assect/img/brand/skf ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{ asset('FrontEnd') }}/assect/img/brand/renata ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{ asset('FrontEnd') }}/assect/img/brand/incepta ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{ asset('FrontEnd') }}/assect/img/brand/beximco ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{ asset('FrontEnd') }}/assect/img/brand/aristopharma ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Featured Brands Part End -->
+            
 
             <!-- Articles Part Start -->
             <section class="articles container my-4">

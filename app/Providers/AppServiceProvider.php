@@ -30,19 +30,18 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        View::composer('FrontEnd.include.side-cat', function ($view){
+
+        // Register a view composer to provide data to a specific view
+        View::composer('*', function ($view) {
+            // Bind the variable 'menu_featured_categories' to the view
             $view->with(
-                //                'menu_featured_categories', Category::orderBy('name_en','ASC')
-//                    ->where('status','=',1)
-//                    ->where('is_featured', 1)
-//                    ->get(),
-                'menu_featured_categories', Category::orderBy('id','ASC')
-                    ->where('is_featured','=',1)
-                    ->where('status','=',1)
-                    ->limit(8)->get()
+                // Retrieve up to 10 categories that are featured and have status 1, ordered by id
+                'menu_featured_categories', Category::orderBy('id', 'ASC')
+                    ->where('is_featured', '=', 1)
+                    ->where('status', '=', 1)
+                    ->limit(10)
+                    ->get()
             );
-
         });
-
     }
 }

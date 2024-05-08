@@ -13,6 +13,20 @@
     </div>
     <div class="card mb-4">
         <div class="card-body">
+            <form action="{{ route('import-type') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+
+                    <label for="">Upload Excel File</label>
+                    <div class="col-md-10">
+                        <input type="file" class="form-control" required name="file">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" type="submit">Upload </button>
+                    </div>
+                </div>
+            </form>
+            <br>
             <div class="table-responsive-sm">
                 <table id="example" class="table table-bordered table-striped" width="100%">
                     <thead>
