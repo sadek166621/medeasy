@@ -40,10 +40,8 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'title_en' => 'required',
-            'banner_img' => 'required',
-        ]);
+        // return $request;
+
 
         if($request->hasfile('banner_img')){
             $img = $request->file('banner_img');
@@ -79,8 +77,8 @@ class BannerController extends Controller
 
         $banner->save();
 
-        Session::flash('success','Banner Inserted Successfully');
-        return redirect()->route('banner.index');
+        Session::flash('success','health-artical Inserted Successfully');
+        return redirect()->route('health-artical.index');
     }
 
     /**
@@ -118,7 +116,7 @@ class BannerController extends Controller
         $this->validate($request,[
             'title_en' => 'required',
         ]);
-        
+
         $banner = Banner::find($id);
         // //banner Photo Update
         if($request->hasfile('banner_img')){
@@ -127,7 +125,7 @@ class BannerController extends Controller
                     unlink($banner->banner_img);
                 }
             } catch (Exception $e) {
-                
+
             }
             $banner_img = $request->banner_img;
             $banner_save = time().$banner_img->getClientOriginalName();
@@ -160,10 +158,10 @@ class BannerController extends Controller
         $banner->update();
 
         $notification = array(
-            'message' => 'Banner Updated Successfully.',
+            'message' => 'health-artical Updated Successfully.',
             'alert-type' => 'success'
         );
-        return redirect()->route('banner.index')->with($notification);
+        return redirect()->route('health-artical.index')->with($notification);
     }
 
     /**
@@ -180,13 +178,13 @@ class BannerController extends Controller
                 unlink($banner->banner_img);
             }
         } catch (Exception $e) {
-            
+
         }
 
     	$banner->delete();
 
         $notification = array(
-            'message' => 'Banner Deleted Successfully.',
+            'message' => 'health-artical Deleted Successfully.',
             'alert-type' => 'error'
         );
 		return redirect()->back()->with($notification);
@@ -197,7 +195,7 @@ class BannerController extends Controller
         $banner->status = 1;
         $banner->save();
 
-        Session::flash('success','Banner Active Successfully.');
+        Session::flash('success','health-artical Active Successfully.');
         return redirect()->back();
     }
 
@@ -206,7 +204,7 @@ class BannerController extends Controller
         $banner->status = 0;
         $banner->save();
 
-        Session::flash('warning','Banner Inactive Successfully.');
+        Session::flash('warning','health-artical Inactive Successfully.');
         return redirect()->back();
     }
 }

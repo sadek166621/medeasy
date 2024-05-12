@@ -17,6 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $guard= ['web'];
     protected $fillable = [
         'name',
 	   'username',
@@ -26,6 +27,7 @@ class User extends Authenticatable
         'role',
 	   'profile_image_user',
         'password',
+        'otp_genarate',
     ];
 
     /**

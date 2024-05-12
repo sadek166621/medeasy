@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Pagination\Paginator;
 use App\Models\Setting;
 use App\Models\Category;
+use App\Models\BestPharmacy;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -40,7 +41,14 @@ class AppServiceProvider extends ServiceProvider
                     ->where('is_featured', '=', 1)
                     ->where('status', '=', 1)
                     ->limit(10)
-                    ->get()
+                    ->get(),
+
+            );
+
+            $view->with(
+                'pharmacies', BestPharmacy::orderBy('id', 'desc')
+                    ->where('status', '=', 1)
+                    ->get(),
             );
         });
     }

@@ -67,8 +67,12 @@ class ProductController extends Controller
             'regular_price'         => 'required|numeric',
             'description_en'        => 'required|string',
             'category_id'           => 'required|integer',
-            'brand_id'              => 'nullable|integer',
+            'brand_id'              => 'required|integer',
+            'type_id'               => 'required|integer',
+            'group_id'              => 'required|integer',
+            'unit_id'               => 'required|integer',
             'stock_qty'             => 'required|integer',
+            'choice_attributes'     => 'required',
             'purchase_price'        => 'required|numeric',
             'discount_price'        => 'required|numeric',
             'product_thumbnail'     => 'required',
@@ -215,17 +219,17 @@ class ProductController extends Controller
                         'qty'        => $request->vqtys[$i],
                     ]);
 
-                    $image = $request->vimages[$i];
-                    if($image){
-                        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-                        Image::make($image)->resize(438,438)->save('upload/products/variations/'.$name_gen);
-                        $save_url = 'upload/products/variations/'.$name_gen;
-                    }else{
-                        $save_url = '';
-                    }
+                    // $image = $request->vimages[$i];
+                    // if($image){
+                    //     $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                    //     Image::make($image)->resize(438,438)->save('upload/products/variations/'.$name_gen);
+                    //     $save_url = 'upload/products/variations/'.$name_gen;
+                    // }else{
+                    //     $save_url = '';
+                    // }
 
-                    $stock->image = $save_url;
-                    $stock->save();
+                    // $stock->image = $save_url;
+                    // $stock->save();
 
                     $i++;
                 }
@@ -342,7 +346,6 @@ class ProductController extends Controller
             'category_id'           => 'required|integer',
             'brand_id'              => 'nullable|integer',
             'unit_id'               => 'nullable|integer',
-            'unit_weight'           => 'nullable|numeric',
         ]);
 
         if(!$request->name_bn){
@@ -500,23 +503,23 @@ class ProductController extends Controller
                             'qty'        => $request->vqtys[$i],
                         ]);
 //                        return $request->vimages[$i] ;
-                        if($request->vimages){
-                            $image = $request->vimages[$i];
-                        }
-                        else{
-                            $image=0;
-                        }
+                        // if($request->vimages){
+                        //     $image = $request->vimages[$i];
+                        // }
+                        // else{
+                        //     $image=0;
+                        // }
 
-                        if($image){
-                            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-                            Image::make($image)->resize(438,438)->save('upload/products/variations/'.$name_gen);
-                            $save_url = 'upload/products/variations/'.$name_gen;
-                        }else{
-                            $save_url = '';
-                        }
+                        // if($image){
+                        //     $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                        //     Image::make($image)->resize(438,438)->save('upload/products/variations/'.$name_gen);
+                        //     $save_url = 'upload/products/variations/'.$name_gen;
+                        // }else{
+                        //     $save_url = '';
+                        // }
 
-                        $stock->image = $save_url;
-                        $stock->save();
+                        // $stock->image = $save_url;
+                        // $stock->save();
 
                         $i++;
                     }

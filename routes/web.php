@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\AttributeController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\OtpLoginController;
 //use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\NagadController;
 use App\Http\Controllers\Frontend\BkashController;
@@ -71,6 +72,7 @@ Route::get('/categories',[CategoryController::class, 'index'])->name('category_l
 
 /* =============== Product Search  ============= */
 Route::post('/medicines/search', [FrontendController::class, 'productSearch'])->name('product.search');
+Route::post('upload-precription', [FrontendController::class, 'uploadprecription'])->name('upload-precription');
 /* =============== Advance Search ============= */
 Route::get('search-product', [FrontendController::class, 'advanceProduct']);
 
@@ -92,6 +94,8 @@ Route::get('product-details/{slug}',[FrontendController::class, 'productDetails'
 // Page Setting
 
 Route::get('/contact-us',[FrontendController::class, 'pageContact'])->name('page.contact');
+Route::get('/all-health-article',[FrontendController::class, 'allhealtharticle'])->name('all-health-article');
+Route::get('/details-health-article/{id}',[FrontendController::class, 'detailshealtharticle'])->name('details-health-article');
 Route::get('/about-us',[FrontendController::class, 'pageAbout'])->name('page.about');
 Route::get('/terms-and-conditions',[FrontendController::class, 'pageTerms'])->name('page.terms');
 Route::get('/privacy-policy',[FrontendController::class, 'pagePolicy'])->name('page.policy');
@@ -236,6 +240,10 @@ Route::get('/load-more-products',[FrontendController::class, 'loadMoreProducts']
 
 //order cancellation
 Route::post('order/cancel', [OrderController::class, 'update_delivery_status'])->name('order.cancel.submit');
+
+
+
+Route::post('otp-varification', [OtpLoginController::class, 'otpvarification'])->name('otp-varification');
 
 
 

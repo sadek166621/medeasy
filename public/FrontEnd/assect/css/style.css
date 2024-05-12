@@ -711,17 +711,7 @@ nav ul li a i {
     border-radius: 10px;
 }
 
-.video {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(https://website-designer-pro.com/medicine/assect/img/branding/order_system.webp);
-    background-size: contain;
-    background-repeat: no-repeat;
-    display: flex;
-    border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-}
+
 
 .play-btn i {
     display: flex;
@@ -1521,9 +1511,14 @@ nav ul li a i {
     background-color: var(--white);
     z-index: 9;
 }
+
 .cart-info .cart-products .select-products {
     display: flex;
     margin-bottom: 10px;
+}
+
+.cart-info .cart-products .thumbnail {
+    position: relative;
 }
 
 .cart-info .cart-products .thumbnail img {
@@ -1532,6 +1527,32 @@ nav ul li a i {
     width: 75px;
     background-repeat: no-repeat;
     margin-right: 10px;
+}
+
+.cart-info .cart-products .thumbnail .remove {
+    color: var(--red);
+    font-weight: 500;
+    position: absolute;
+    top: 27%;
+    left: 35%;
+    display: none;
+    opacity: 70%;
+}
+
+.cart-info .cart-products .thumbnail .remove i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+
+.cart-info .cart-products .thumbnail:hover .remove {
+    display: initial;
+
 }
 
 .cart-info .cart-products .product-title {
@@ -1623,7 +1644,7 @@ nav ul li a i {
     font-weight: 500;
 }
 
-.cart-info .cart-products .save-price span{
+.cart-info .cart-products .save-price span {
     display: flex;
     justify-content: space-between;
     color: var(--gray);

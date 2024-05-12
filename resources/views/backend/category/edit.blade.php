@@ -44,7 +44,7 @@
                                         <input type="text" placeholder="Name Bangla" id="name_bn" name="name_bn" value="{{$category->name_bn}}" class="form-control" >
                                     </div>
                                 </div>
-                                <div class="form-group row mb-4">
+                                <div class="form-group row mb-4 d-none">
                                     <label class="col-md-3 col-form-label">Parent Category</label>
                                     <div class="col-md-9">
                                         <div class="custom_select">

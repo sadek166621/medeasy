@@ -102,9 +102,9 @@
                                 {{--                            @else--}}
                                 <div class="col-md-6 mb-4">
                                     <a style="background-color: #365486; " type="button" class="btn btn-sm float-end" id="closeModal1" data-bs-toggle="modal" data-bs-target="#brand"><i class="fa-solid fa-plus text-white"></i></a>
-                                    <label for="brand_id" class="col-form-label" style="font-weight: bold;">Brand:</label>
+                                    <label for="brand_id" class="col-form-label" style="font-weight: bold;">Brand:<span class="text-danger">*</span></label>
                                     <div class="custom_select">
-                                        <select class="form-control select-active w-100 form-select select-nice" name="brand_id" id="brand_id">
+                                        <select class="form-control select-active w-100 form-select select-nice" required name="brand_id" id="brand_id">
                                             <option value="" readonly>--Select Brand--</option>
                                             <option value="0" >--Non Brand--</option>
                                             @foreach ($brands as $brand)
@@ -160,38 +160,47 @@
 
                                 {{--                            @else--}}
                                 <div class="col-md-6 mb-4 " id="unit_field">
-                                    <label for="type_id" class="col-form-label" style="font-weight: bold;">Type:</label>
+                                    <label for="type_id" class="col-form-label" style="font-weight: bold;">Type:<span class="text-danger">*</span></label>
                                     <div class="custom_select">
-                                        <select class="form-control select-active w-100 form-select select-nice" name="type_id" id="type_id">
+                                        <select class="form-control select-active w-100 form-select select-nice" required name="type_id" id="type_id">
                                             <option disabled hidden {{old('type_id') ? '' : 'selected'}} readonly value="">--Select Type--</option>
                                             @foreach($types as $type)
                                                 <option value="{{ $type->id }}" {{ $product->type_id== $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('type_id')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                    </div>
 
                                 <div class="col-md-6 mb-4 " id="unit_field">
-                                    <label for="group_id" class="col-form-label" style="font-weight: bold;">Group:</label>
+                                    <label for="group_id" class="col-form-label" style="font-weight: bold;">Group:<span class="text-danger">*</span></label>
                                     <div class="custom_select">
-                                        <select class="form-control select-active w-100 form-select select-nice" name="group_id" id="group_id">
+                                        <select class="form-control select-active w-100 form-select select-nice" required name="group_id" id="group_id">
                                             <option disabled hidden {{old('group_id') ? '' : 'selected'}} readonly value="">--Select Group--</option>
                                             @foreach($groups as $group)
                                                 <option value="{{ $group->id }}" {{$product->group_id == $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('group_id')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                    </div>
 
                                 <div class="col-md-6 mb-4 ">
-                                    <label for="unit_id" class="col-form-label" style="font-weight: bold;">Unit Type:</label>
+                                    <label for="unit_id" class="col-form-label" style="font-weight: bold;">Unit Type:<span class="text-danger">*</span></label>
                                     <div class="custom_select">
-                                        <select class="form-control select-active w-100 form-select select-nice" name="unit_id" id="unit_id">
+                                        <select class="form-control select-active w-100 form-select select-nice" required name="unit_id" id="unit_id">
                                             <option disabled hidden {{old('unit_id') ? '' : 'selected'}} readonly value="">--Select Unit Type--</option>
                                             @foreach($units as $unit)
                                                 <option value="{{ $unit->id }}" @if($product->unit_id == $unit->id) selected @endif>{{ $unit->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('unit_id')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 {{--                            @endif--}}
@@ -200,7 +209,10 @@
                                 {{--                            @else--}}
                                 <div class="col-md-6 mb-4 ">
                                     <label for="unit_weight" class="col-form-label" style="font-weight: bold;">Unit Weight (e.g. 10 mg, 1 Carton, 15 Pcs)</label>
-                                    <input class="form-control" id="unit_weight" type="number" name="unit_weight" placeholder="Write unit weight" value="{{ $product->unit_weight }}">
+                                    <input class="form-control" id="unit_weight" type="number"  name="unit_weight" placeholder="Write unit weight" value="{{ $product->unit_weight }}">
+                                    @error('unit_weight')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                 </div>
                                 {{--                            @endif--}}
                                 {{-- <div class="col-md-6 mb-4">
@@ -268,7 +280,7 @@
 	                        <!-- Variation Start -->
 	                        <div class="col-md-12 mb-4">
 				                <div class="custom_select cit-multi-select">
-				                	<label for="choice_attributes" class="col-form-label" style="font-weight: bold;">Attributes:</label>
+				                	<label for="choice_attributes" class="col-form-label" style="font-weight: bold;">Attributes:<span class="text-danger">*</span></label>
                                     <select class="form-control select-active w-100 form-select select-nice" name="choice_attributes[]" id="choice_attributes" multiple="multiple" data-placeholder="Choose Attributes">
 					                	@foreach($attributes as $attribute)
 					                		@if($product->is_varient==1 && count(json_decode($product->attributes)) > 0)
@@ -278,6 +290,9 @@
 					                		@endif
 					               		@endforeach
                                     </select>
+                                    @error('choice_attributes')
+                                            <p class="text-danger">{{$message}}</p>
+                                    @enderror
                                 </div>
 	                        </div>
 
@@ -401,7 +416,7 @@
 											<th>Price</th>
 											<th>SKU</th>
 											<th>Quantity</th>
-											<th>Photo <span class="text-danger">*</span></th>
+											{{-- <th>Photo <span class="text-danger">*</span></th> --}}
 										</tr>
 									</thead>
 									<tbody>
@@ -411,10 +426,10 @@
 												<td><input type="text" name="{{ $stock->id }}_price" class="form-control vdp" value="{{ $stock->price }}" required></td>
 												<td><input type="text" name="{{ $stock->id }}_sku" class="form-control" required value="{{ $stock->sku }}"></td>
 												<td><input type="text" name="{{ $stock->id }}_qty" class="form-control" value="{{ $stock->qty }}" required></td>
-												<td>
+												{{-- <td>
 													<img src="{{ asset($stock->image) }}" alt="{{ $stock->varient }}-image" style="width: 15%; float: left;">
 													<input type="file" name="{{ $stock->id }}_image" class="form-control" style="width: 80%; float: left; margin-left: 5%;">
-												</td>
+												</td> --}}
 											</tr>
 										@endforeach
 									</tbody>

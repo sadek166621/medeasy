@@ -1,5 +1,18 @@
 @extends('FrontEnd.master')
 @section('content')
+<style>
+    .video {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url({{ asset($hto->image) }});
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+</style>
 <!-- Mobile Slider Start -->
 <div class="mobile-slider d-block d-md-none">
     <div id="carouselExampleInterval-1" class="carousel slide" data-bs-ride="carousel">
@@ -88,10 +101,10 @@
             <!-- Desktop Slider End -->
 
             <!-- Categories Part Start -->
-            <div class="categories container owl-carousel owl-theme owl-loaded my-4">
+            <div class="categories index-categories container owl-carousel owl-theme owl-loaded my-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-semibold">Products Categories</h5>
-                    <a class="btn-primary" href="{{route('category_list.index')}}">See All</a>
+                    {{-- <a class="btn-primary" href="{{route('category_list.index')}}">See All</a> --}}
                 </div>
                 <div class="owl-stage-outer">
                     <div class="row owl-stage g-1">
@@ -115,25 +128,55 @@
                     <div class="col-12 col-lg-7 p-2">
                         <h3 class="fw-bold">কিভাবে ঔষধ অর্ডার করবেন?</h3>
                         <div class="my-4">
-                            <div class="d-flex"><strong>১.</strong>
-                                <p class="ms-2">প্রেসক্রিপশন ছবি আপলোড করুন অথবা ঔষধ সার্চ করে কিনুন।</p>
+                            <div>
+                                <p class="ms-2">{!! $hto->text !!}</p>
                             </div>
-                            <div class="d-flex"><strong>২.</strong>
-                                <p class="ms-2">আমাদের ফার্মাসিস্ট আপনার প্রদানকৃত প্রেসক্রিপশন ভেরিফাইড
-                                    করে আপনাকে ফোন করে অর্ডার কনফার্ম করবেন।
-                                </p>
-                            </div>
-                            <div class="d-flex"><strong>৩.</strong>
-                                <p class="ms-2"> ১২-২৪ ঘন্টার মধ্য আপনার ডেলিভারি বুঝে নিন।</p>
-                            </div>
+
                         </div>
                         <h6 class="fw-semibold">ওষুধে আকর্ষণীয় মূল্যছাড় পেতে এখনই অর্ডার করুন -</h6>
                         <div class="order-system row g-2 my-2">
                             <div class="col-12 col-lg-6">
                                 <div class="order-system-upload">
-                                    <a href="#"><img src="{{ asset('FrontEnd') }}/assect/img/icon/upload.webp" alt="">Upload
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"><img src="{{ asset('FrontEnd') }}/assect/img/icon/upload.webp" alt="">Upload
                                         Prescriptions</a>
                                 </div>
+                                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+
+                                        <div class="modal-body">
+                                            <button type="button" style="
+                                            float: right;
+                                        " class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <div class="login-container">
+                                                <div class="logo-container">
+                                                    <!-- Your logo here -->
+                                                    <img alt="medEasy" src="{{asset('FrontEnd')}}/assect/img/articles/medeasy-login-signup-otp.webp" decoding="async">
+                                                </div>
+                                                <h4 class="login-heading">Update Image</h4>
+                                                <form class="login-form" action="{{ route('upload-precription') }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <!-- Your form fields here -->
+                                                    <div class="input-container">
+                                                        <textarea type="text" name="address" required class="login-input form-control" placeholder="Your Full Address" value=""></textarea>
+                                                    </div>
+                                                    <div class="input-container">
+                                                        <input type="file" name="image" required class="login-input form-control" placeholder="Your Contact Number" value="">
+                                                    </div>
+
+                                                    <div class="button-container">
+                                                        <button class="login-button" style="
+                                                        font-weight: 500;
+                                                    " type="submit">Submit</button>
+                                                    </div>
+                                                </form>
+                                                <!-- Optional: Add social login buttons or other options below -->
+                                            </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="order-system-call">
@@ -146,7 +189,7 @@
                     <div class="col-12 col-lg-4 p-2">
                         <div class="video">
                             <div class="play-btn">
-                                <a class="popup-youtube" href="https://www.youtube.com/watch?v=pBFQdxA-apI"><i
+                                <a class="popup-youtube" href="{{ $hto->youtube_link }}"><i
                                         class="fa-regular fa-circle-play"></i></a>
                             </div>
                         </div>
@@ -161,7 +204,7 @@
                 <div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="fw-semibold">{{ $category->name_en }}</h5>
-                        <a class="btn-primary" href="#">See All</a>
+                        <a class="btn-primary" href="{{route('product.category', $category->slug)}}">See All</a>
                     </div>
                     <div class="owl-stage-outer">
                         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 owl-stage g-3">
@@ -181,7 +224,7 @@
                                         <a href="{{route('product.details', $product->slug)}}"> <img src="{{asset($product->product_thumbnail)}}" class="card-img-top"
                                                 alt="Products Image"></a>
                                         <div class="card-body">
-                                            <a class="product-name" href="{{route('product.details', $product->slug)}}">{{ $product->name_en }}<span>{{ $product->unit_weight }} {{ $product->unit->name }}</span></a>
+                                            <a class="product-name" href="{{route('product.details', $product->slug)}}">{{ $product->name_en }}<span>{{ $product->unit_weight }} {{ $product->unit->name }} </span></a>
                                             <p class="product-type">{{ $product->type->name }}</p>
                                             <a href="{{route('product.details', $product->slug)}}" class="generic-name">{{$product->group->name }}</a>
                                             <p class="company-name">{{ $product->brand->name_en }}</p>
@@ -1617,90 +1660,38 @@
             </section> --}}
             <!-- Prescription Medicine Choice Products End -->
 
-            
+
 
             <!-- Articles Part Start -->
             <section class="articles container my-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-semibold">Health Articles</h5>
-                    <a class="btn-primary" href="#">See All</a>
+                    <a class="btn-primary" href="{{ route('all-health-article') }}">See All</a>
                 </div>
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 g-3">
+                    @foreach ($home_banners as $home_banner )
                     <div class="col">
                         <div class="card h-100">
-                            <a href="#"> <img src="{{ asset('FrontEnd') }}/assect/img/articles/highPressure.webp" class="card-img-top"
+                            <a href="{{ route('details-health-article',$home_banner->id) }}"> <img src="{{ asset($home_banner->banner_img) }}" class="card-img-top"
                                     alt="Articles Image"></a>
                             <div class="articles-name">
-                                <a href="#">আপনি কি জানেন উচ্চ রক্তচাপ প্রতিরোধ করা
-                                    যায়?</a>
+                                <a href="{{ route('details-health-article',$home_banner->id) }}">{{$home_banner->title_en}}</a>
                             </div>
                             <div class="articles-text">
                                 <p>
-                                    স্বাস্থ্যকর জীবনযাপন করে আপনি আপনার রক্তচাপকে নিয়ন্ত্রণে রাখতে পারবেন। উচ্চ
-                                    রক্তচাপ প্রতিরোধ করলে আপনার হৃদরোগ এবং স্ট্রোকের ঝুঁকি কমতে পারে। নিম্নলিখিত
-                                    স্বাস্থ্যকর জীবনযাপনের অভ্যাসগুলি অনুশীলন করুন... <a href="#">Read More <i
+                                  {{Str::limit($home_banner->description_en,300,'...')}}<a href="{{ route('details-health-article',$home_banner->id) }}">Read More <i
                                             class="fa-solid fa-angle-right"></i></a>
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a href="#"> <img src="{{ asset('FrontEnd') }}/assect/img/articles/kidney.webp" class="card-img-top"
-                                    alt="Articles Image"></a>
-                            <div class="articles-name">
-                                <a href="#">দীর্ঘস্থায়ী কিডনি রোগ কি?</a>
-                            </div>
-                            <div class="articles-text">
-                                <p>
-                                    দীর্ঘস্থায়ী কিডনি রোগ, যাকে ক্রনিক কিডনি ফেইলিওরও বলা হয়, এতে কিডনির
-                                    কার্যকারিতা ধীরে ধীরে কমে যায়। আপনার কিডনি আপনার রক্ত ​​থেকে বর্জ্য এবং
-                                    অতিরিক্ত তরল ফিল্টার করে, যা আপনার প্রস্রাবের সাথে বের হয়ে যায়। ক্রনিক
-                                    কিডনি রোগ বেশি গভীর পর্যায়ে চলে গেলে...
-                                    <a href="#">Read More <i class="fa-solid fa-angle-right"></i></a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a href="#"> <img src="{{ asset('FrontEnd') }}/assect/img/articles/stoke.webp" class="card-img-top"
-                                    alt="Articles Image"></a>
-                            <div class="articles-name">
-                                <a href="#">দেশে কম বয়সী হৃদরোগীর সংখ্যা বাড়ছে।</a>
-                            </div>
-                            <div class="articles-text">
-                                <p>
-                                    দেশে কম বয়সী হৃদরোগীর সংখ্যা বাড়ছে। উন্নত বিশ্বের তুলনায় এই হার ১৭ গুণ বেশি।
-                                    বাড়ছে অল্প বয়সে মৃত্যুও। অল্প বয়সে ধূমপান, মদ্যপান, কোলেস্টেরল ও চর্বিসমৃদ্ধ
-                                    খাবার খাওয়া, অনিয়ন্ত্রিত জীবনযাপন, ডায়াবেটিস হওয়া—এর অন্যতম কারণ...
-                                    <a href="#">Read More <i class="fa-solid fa-angle-right"></i></a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a href="#"> <img src="{{ asset('FrontEnd') }}/assect/img/articles/insulin.webp" class="card-img-top"
-                                    alt="Articles Image"></a>
-                            <div class="articles-name">
-                                <a href="#">ইনসুলিন নিয়ে ভুল ধারণা।</a>
-                            </div>
-                            <div class="articles-text">
-                                <p>
-                                    ইনসুলিন আজীবন নিতেই হবে- এমন কোন বাধ্যবাধকতা নেই। ডাক্তারের পরামর্শে যত দিন
-                                    ইনসুলিন নেয়া লাগে ততদিনই ইনসুলিন নিতে হয়... <a href="#">Read More <i
-                                            class="fa-solid fa-angle-right"></i></a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </section>
             <!-- Articles Part End -->
 
             <!-- Testimonials Part Start -->
-            <section class="testimonials container my-4">
+            <section class="testimonials container my-4 d-none">
                 <div class="mb-3">
                     <h5 class="fw-semibold">Testimonials</h5>
                 </div>
@@ -1806,153 +1797,24 @@
             <!-- Testimonials Part End -->
 
             <!-- About Part Start -->
+
             <section class="about container px-3 my-4">
                 <div class="mb-3">
                     <h5 class="fw-semibold">Best Online Pharmacy Platform in Bangladesh</h5>
                 </div>
+                @foreach ($pharmacies as $pharmacy )
                 <div>
-                    <img src="{{ asset('FrontEnd') }}/assect/img/branding/branding.jpg" alt="About Image">
-                    <p class="py-2">Bangladesh is a developing nation with more than <span
-                            class="fw-semibold">180 million</span> people. With the advent of
-                        technology, Bangladesh's health care sector has shown tremendous expansion in the past
-                        few years. As a result, several online pharmacies and health care platforms have been
-                        developed to provide affordable access to quality healthcare services.
-                    </p>
+                    <img src="{{ asset($pharmacy->pharmacy_img) }}" alt="pharmacy Image">
                     <p class="py-2">
-                        <span class="fw-semibold">Medic</span> is Bangladesh's most trusted and reliable <span
-                            class="fw-semibold">online pharmacy platform.</span> The secure and user-friendly
-                        platform makes it easy to access the services
-                        provided. Medic also offers discounts and deals to help make health care services more
-                        affordable. The platform provides 24/7 customer service and support to ensure customers
-                        get the best possible experience.
-                    </p>
-                    <p class="py-1">
-                        Overall, Medic is the <span class="fw-semibold">best online pharmacy platform in
-                            Bangladesh.</span> It
-                        provides affordable access to quality health care services and offers the best customer
-                        support. Medic is the best choice for anyone looking for quality health care services
-                        in Bangladesh.
+                        {!! $pharmacy->description !!}
                     </p>
                 </div>
+                @endforeach
             </section>
+
             <!-- About Part End -->
 
-            <!-- Services Offered Part Start -->
-            <section class="services-offered px-3 my-4">
-                <div class="mb-3">
-                    <h5 class="fw-semibold">Services Offered By Medic</h5>
-                </div>
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                    <div class="accordion-item">
-                        <h6 class="accordion-header" id="flush-benefitOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#benefitOne" aria-expanded="false" aria-controls="benefitOne">
-                                1. Easy and convenience.
-                            </button>
-                        </h6>
-                        <div id="benefitOne" class="accordion-collapse collapse show"
-                            aria-labelledby="flush-benefitOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">Medic makes it easy for customers to purchase
-                                medication without going to the pharmacy. Customers can order their
-                                medications from the comfort of their homes and have them shipped directly
-                                to them. Medic also has an app that allows customers to manage their
-                                medications and orders.</div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h6 class="accordion-header" id="flush-benefitTwoe">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#benefitTwo" aria-expanded="false" aria-controls="benefitTwo">
-                                2. Quality Assurance.
-                            </button>
-                        </h6>
-                        <div id="benefitTwo" class="accordion-collapse collapse"
-                            aria-labelledby="flush-benefitTwo" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">All medications sold by Medic meet Health Care
-                                standards for quality assurance before shipping—ensuring that you receive a
-                                safe and effective product when you order from the site.</div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h6 class="accordion-header" id="flush-benefitThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#benefitThree" aria-expanded="false"
-                                aria-controls="benefitThree">
-                                3. Variety Medicine
-                            </button>
-                        </h6>
-                        <div id="benefitThree" class="accordion-collapse collapse"
-                            aria-labelledby="flush-benefitThree" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">Medic offers various medications, including
-                                non-prescription drugs, over-the-counter products, and herbal remedies. As a
-                                result, clients may easily find what they need all in one place!
 
-                                Overall, Medic is a great option for customers looking to save time and
-                                money regarding their medication needs. It allows customers to obtain the
-                                goods they require quickly and affordably by providing convenience,
-                                affordability, quality assurance, simple refills, and a wide selection of
-                                pharmaceuticals.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Services Offered Part End -->
-
-            <!-- Benefits Part Start -->
-            <section class="Benefits px-3 my-4">
-                <div class="mb-3">
-                    <h5 class="fw-semibold">Benefits of Using Medic</h5>
-                </div>
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                    <div class="accordion-item">
-                        <h6 class="accordion-header" id="flush-serviceOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#serviceOne" aria-expanded="false" aria-controls="serviceOne">
-                                1. Medicine Delivery.
-                            </button>
-                        </h6>
-                        <div id="serviceOne" class="accordion-collapse collapse show"
-                            aria-labelledby="flush-serviceOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">Medic also provides medicine delivery services at
-                                affordable prices. Customers can order medicines online and get them
-                                delivered to their doorstep.</div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h6 class="accordion-header" id="flush-serviceTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#serviceTwo" aria-expanded="false" aria-controls="serviceTwo">
-                                2. Medical Advice and Support.
-                            </button>
-                        </h6>
-                        <div id="serviceTwo" class="accordion-collapse collapse"
-                            aria-labelledby="flush-serviceTwo" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">Medic also provides access to medical advice and
-                                support from qualified medical professionals. Customers can get advice on
-                                their health and well-being and answers to any medical questions.</div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h6 class="accordion-header" id="flush-serviceThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#serviceThree" aria-expanded="false"
-                                aria-controls="serviceThree">
-                                3. Discounts and Deals :
-                            </button>
-                        </h6>
-                        <div id="serviceThree" class="accordion-collapse collapse"
-                            aria-labelledby="flush-serviceThree" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">Medic also offers discounts and deals to help make
-                                health care services more affordable. Customers can avail of discounts and
-                                deals on medicine delivery, lab tests, doctor consultations, and more.
-
-                                Overall, Medic is the best online pharmacy and healthcare platform in
-                                Bangladesh. It provides affordable access to quality healthcare services and
-                                offers the best customer support. Medic is the best choice for anyone
-                                looking for quality health care services in Bangladesh.</div>
-                        </div>
-                    </div>
-                </div>
             </section>
             <!-- Benefits Part End -->
 

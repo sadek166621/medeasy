@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\AttributeController;
 use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\BestPharmacyController;
 use App\Http\Controllers\Backend\CampaingController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\TypeController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SmsController;
+use App\Http\Controllers\Backend\HtoController;
 use App\Http\Controllers\Backend\StaffController;
 use App\Http\Controllers\Backend\SubscriberController;
 use App\Http\Controllers\Backend\SupplierController;
@@ -308,11 +310,11 @@ Route::middleware('adminAccess')->group(function(){
 
 
     // <--------- Banner route start ------>
-	Route::resource('/banner', BannerController::class);
-	Route::post('/banner/update/{id}', [BannerController::class, 'update'])->name('banner.update');
-	Route::get('/banner/delete/{id}', [BannerController::class, 'destroy'])->name('banner.delete');
-	Route::get('/banner_active/{id}', [BannerController::class, 'active'])->name('banner.active');
-	Route::get('/banner_inactive/{id}', [BannerController::class, 'inactive'])->name('banner.in_active');
+	Route::resource('/health-artical', BannerController::class);
+	Route::post('/health-artical/update/{id}', [BannerController::class, 'update'])->name('health-artical.update');
+	Route::get('/health-artical/delete/{id}', [BannerController::class, 'destroy'])->name('banner.delete');
+	Route::get('/health-artical/{id}', [BannerController::class, 'active'])->name('banner.active');
+	Route::get('/health-artical/{id}', [BannerController::class, 'inactive'])->name('banner.in_active');
 
 	// <--------- Blog route start ------>
 	Route::resource('/blog', BlogController::class);
@@ -338,6 +340,19 @@ Route::middleware('adminAccess')->group(function(){
 	Route::post('/unit/update/{id}', [AttributeController::class, 'update_unit'])->name('unit.update');
 	Route::get('/unit/delete/{id}', [AttributeController::class, 'destroy_unit'])->name('unit.delete');
 	Route::get('/unit-status/{id}', [AttributeController::class, 'changeStatus'])->name('unit.changeStatus');
+
+
+
+
+	//Best Online Pharmacy Route
+	Route::get('/best-pharmacy', [BestPharmacyController::class, 'index'])->name('best-pharmacy.index');
+	Route::get('/best-pharmacy/create', [BestPharmacyController::class, 'create'])->name('best-pharmacy.create');
+	Route::post('/best-pharmacy/store', [BestPharmacyController::class, 'store'])->name('best-pharmacy.store');
+	Route::get('/best-pharmacy/edit/{id}', [BestPharmacyController::class, 'edit'])->name('best-pharmacy.edit');
+	Route::post('/best-pharmacy/update/{id}', [BestPharmacyController::class, 'update'])->name('best-pharmacy.update');
+	Route::get('/best-pharmacy/delete/{id}', [BestPharmacyController::class, 'destroy'])->name('best-pharmacy.delete');
+	Route::get('/best-pharmacy-status/{id}', [BestPharmacyController::class, 'changeStatus'])->name('best-pharmacy.changeStatus');
+
 
 
 	// Setting All Route
@@ -414,6 +429,14 @@ Route::middleware('adminAccess')->group(function(){
 	Route::get('/roles/edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
 	Route::post('/roles/update/{id}', [RoleController::class, 'update'])->name('roles.update');
 	Route::get('/roles/delete/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
+	// how-to-order //
+	Route::get('/how-to-order', [HtoController::class, 'index'])->name('how-to-order.index');
+	Route::get('/how-to-order/create', [HtoController::class, 'create'])->name('how-to-order.create');
+	Route::post('/how-to-order/store', [HtoController::class, 'store'])->name('how-to-order.store');
+	Route::get('/how-to-order/edit/{id}', [HtoController::class, 'edit'])->name('how-to-order.edit');
+	Route::post('/how-to-order/update/{id}', [HtoController::class, 'update'])->name('how-to-order.update');
+	Route::get('/how-to-order/delete/{id}', [HtoController::class, 'destroy'])->name('how-to-order.destroy');
 
 	// role premissions staffs //
 	Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');

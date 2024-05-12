@@ -19,7 +19,9 @@ use App\Models\OrderDetail;
 use App\Models\Vendor;
 use App\Models\Coupon;
 use App\Models\Shipping;
+use App\Models\Hto;
 use App\Models\Order;
+use App\Models\Prescription;
 use Illuminate\Support\Facades\Auth;
 use Image;
 //use Auth;
@@ -80,7 +82,7 @@ class FrontendController extends Controller
 
         $product_top_rates = Product::where('status',1)->orderBy('regular_price')->limit(9)->get();
         // Home Banner
-        $home_banners = Banner::where('status',1)->where('position',1)->orderBy('id','DESC')->limit(1)->get();
+        $home_banners = Banner::where('status',1)->orderBy('id','DESC')->get();
         $middle_banners1 = Banner::where('status',1)->where('position',2)->orderBy('id','DESC')->limit(2)->get();
         $middle_banners2 = Banner::where('status',1)->where('position',3)->orderBy('id','DESC')->limit(2)->get();
 
@@ -102,6 +104,8 @@ class FrontendController extends Controller
 
         $campaign_products = CampaingProduct::all();
 
+        $hto = Hto::first();
+
 //        $home_view = 'FrontEnd.home.index';
         $home_view = 'FrontEnd.home.index2';
 
@@ -118,7 +122,7 @@ class FrontendController extends Controller
 
         $brands = Brand::where('status',1)->get();
 
-        return view($home_view, compact('brands','categories', 'tab_categories', 'sliders', 'middleSliders', 'product_featured', 'featured_category','products','product_top_sellings','product_trendings','product_recently_adds','product_top_rates','home_banners', 'middle_banners1', 'middle_banners2','sort_search','todays_sale','home2_featured_categories','hot_deals'));
+        return view($home_view, compact('hto','brands','categories', 'tab_categories', 'sliders', 'middleSliders', 'product_featured', 'featured_category','products','product_top_sellings','product_trendings','product_recently_adds','product_top_rates','home_banners', 'middle_banners1', 'middle_banners2','sort_search','todays_sale','home2_featured_categories','hot_deals'));
     } // end method
 
     // public function shopgrid(){
@@ -241,6 +245,7 @@ class FrontendController extends Controller
 
         $category = Category::where('slug', $slug)->first();
         // dd($category);
+        $brands = Brand::where('status', 1)->orderBy('id','desc')->get();
 
         // Top filter Start
         $sort_by = $request->sort_by;
@@ -301,7 +306,7 @@ class FrontendController extends Controller
         // dd($products);
         $subcategories = Category::orderBy('name_en','ASC')->where('status',1)->where('parent_id',$category->id)->get();
 
-        return view('FrontEnd.product.category_view',compact('products','categories','category','sort_by','brand_id','subcategories'));
+        return view('FrontEnd.product.category_view',compact('products','brands','categories','category','sort_by','brand_id','subcategories'));
     } // end method
     /* ========== End CatWiseProduct Method ======== */
 
@@ -367,11 +372,36 @@ class FrontendController extends Controller
             'attributes' => $attributes,
         ));
     }
+
+    public function uploadprecription(Request $request){
+        // return $request;
+        if($request->hasfile('image')){
+            $img = $request->file('image');
+            $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
+            Image::make($img)->save('upload/prescription/'.$name_gen);
+            $save_url = 'upload/prescription/'.$name_gen;
+        }else{
+            $save_url = '';
+        }
+
+        Prescription::create([
+            'image'=>$save_url,
+            'address'=>$request->address,
+        ]);
+        Session::flash('success','Prescription Uploaded Successfully');
+        return back();
+    }
     /* ================= END PRODUCT VIEW WITH MODAL METHOD =================== */
+    public function allhealtharticle(){
 
+        $articles = Banner::where('status',1)->orderBy('id','DESC')->get();
+        return view('FrontEnd.health-article.all-health-article',compact('articles'));
+    }
 
-
-
+    public function detailshealtharticle($id){
+        $article = Banner::find($id);
+        return view('FrontEnd.health-article.details-health-article',compact('article'));
+    }
     /* ================= Start Product Search =================== */
     public function ProductSearch(Request $request){
         //$request->validate(["search" => "required"]);

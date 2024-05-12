@@ -3,12 +3,12 @@
 <section class="content-main">
     <div class="content-header">
         <div class="col-md-10">
-            <h2 class="content-title">Banner List</h2>
-            <strong style="font-weight: bold" class="text-dark"> {{ count($banners) }} Banners Found </strong>
+            <h2 class="content-title">Health Articles List</h2>
+            <strong style="font-weight: bold" class="text-dark"> {{ count($banners) }} Health Articless Found </strong>
 
         </div>
         <div class="col-md-2">
-            <a href="{{ route('banner.create') }}" class="btn btn-primary" title="Add Banner"><i class="material-icons md-plus"></i></a>
+            <a href="{{ route('health-artical.create') }}" class="btn btn-primary" title="Add Health Articles"><i class="material-icons md-plus"></i></a>
         </div>
 
     </div>
@@ -19,11 +19,12 @@
                     <thead>
                         <tr>
                             <th scope="col">Sl</th>
-                            <th scope="col">Banner Photo</th>
+                            <th scope="col">Health Articles Photo</th>
                             <th scope="col">Title </th>
+                            <th scope="col">Description</th>
 {{--                            <th scope="col">Title (Bangla)</th>--}}
-                            <th scope="col">Position</th>
-                            <th scope="col">Banner Url</th>
+                            {{-- <th scope="col">Position</th> --}}
+                            {{-- <th scope="col">Health Articles Url</th> --}}
                             <th scope="col">Status</th>
                             <th scope="col" class="text-end">Action</th>
                         </tr>
@@ -40,17 +41,8 @@
                                 </a>
                             </td>
                             <td> {{ $banner->title_en ?? 'NULL' }} </td>
+                            <td> {{ $banner->description_en ?? 'NULL' }} </td>
 {{--                            <td> {{ $banner->title_bn ?? 'NULL' }} </td>--}}
-                            @if($banner->position == 1)
-                            <td> Home Banner </td>
-                            @elseif($banner->position == 2)
-                                <td> Middle Banner 1 </td>
-                            @elseif($banner->position == 3)
-                                <td> Middle Banner 2 </td>
-                            @else
-                            <td> Footer Banner </td>
-                            @endif
-                            <td> {{ $banner->banner_url ?? '#' }} </td>
                             <td>
                                 @if($banner->status == 1)
                                   <a href="{{ route('banner.in_active',['id'=>$banner->id]) }}">
@@ -62,7 +54,7 @@
                             </td>
                             <td class="text-end">
                                 <div class=" btn-group" style="margin: 25% 0">
-                                    <a href="{{ route('banner.edit', $banner->id) }}" class="btn btn-primary" title="Edit"
+                                    <a href="{{ route('health-artical.edit', $banner->id) }}" class="btn btn-primary" title="Edit"
                                        style="padding:12px; margin-right: 5px; border-radius: 5px"><i class="fa fa-pencil"></i></a>
                                     <a href="{{ route('banner.delete',$banner->id) }}" id="delete" class="btn btn-danger" title="Delete"
                                        style="border-radius: 5px"><i class="fa fa-trash"></i></a>

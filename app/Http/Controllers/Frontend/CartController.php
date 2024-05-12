@@ -158,7 +158,7 @@ class CartController extends Controller
         return response()->json(array(
             'carts' => $carts,
             'cartQty' => $cartQty,
-            'cartTotal' => round($cartTotal),
+            'cartTotal' => $cartTotal,
         ));
 
     } // end method

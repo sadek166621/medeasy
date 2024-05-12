@@ -54,10 +54,10 @@
 		                         	<label for="image" class="col-form-label col-md-2" style="font-weight: bold;">Cover Photo:</label>
 		                            <input name="slider_img" class="form-control" type="file"  id="image" >
 		                        </div>
-                                <div class=" mb-4">
+                                <div class=" mb-4 d-none" >
                                     <label for="position" class="col-form-label" style="font-weight: bold;"> Type:</label>
                                     <div class="custom_select">
-                                        <select class="form-control select-active w-100 form-select select-nice" name="type" required>
+                                        <select class="form-control select-active w-100 form-select select-nice" name="type" >
                                             <option value="1" selected>Header Slider</option>
                                             <option value="2">Middle Slider</option>
 {{--                                            <option value="3">Middle Banner 2</option>--}}

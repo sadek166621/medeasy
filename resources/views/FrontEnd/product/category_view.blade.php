@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                                 @endforeach
-                           
+
                             @endif
                         </div>
                     </div>
@@ -653,34 +653,13 @@
                 </div>
                 <div class="owl-stage-outer">
                     <div class="row owl-stage g-1">
+                        @foreach ($brands as $brand )
                         <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{asset('FrontEnd')}}/assect/img/brand/square ltd..webp"
-                                    alt="Featured Brands"></a>
+                            <a class="card" href="#"><img src="{{ asset($brand->brand_image) }}"
+                                alt="Featured Brands">
+                            </a>
                         </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{asset('FrontEnd')}}/assect/img/brand/smc ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{asset('FrontEnd')}}/assect/img/brand/skf ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{asset('FrontEnd')}}/assect/img/brand/renata ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{asset('FrontEnd')}}/assect/img/brand/incepta ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{asset('FrontEnd')}}/assect/img/brand/beximco ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
-                        <div class="col owl-item">
-                            <a class="card" href="#"><img src="{{asset('FrontEnd')}}/assect/img/brand/aristopharma ltd..webp"
-                                    alt="Featured Brands"></a>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -692,28 +671,14 @@
                     <h5 class="fw-semibold">Best Online Pharmacy Platform in Bangladesh</h5>
                 </div>
                 <div>
-                    <img src="{{asset('FrontEnd')}}/assect/img/branding/branding.jpg" alt="About Image">
-                    <p class="py-2">Bangladesh is a developing nation with more than <span
-                            class="fw-semibold">180 million</span> people. With the advent of
-                        technology, Bangladesh's health care sector has shown tremendous expansion in the past
-                        few years. As a result, several online pharmacies and health care platforms have been
-                        developed to provide affordable access to quality healthcare services.
-                    </p>
-                    <p class="py-2">
-                        <span class="fw-semibold">Medic</span> is Bangladesh's most trusted and reliable <span
-                            class="fw-semibold">online pharmacy platform.</span> The secure and user-friendly
-                        platform makes it easy to access the services
-                        provided. Medic also offers discounts and deals to help make health care services more
-                        affordable. The platform provides 24/7 customer service and support to ensure customers
-                        get the best possible experience.
-                    </p>
-                    <p class="py-1">
-                        Overall, Medic is the <span class="fw-semibold">best online pharmacy platform in
-                            Bangladesh.</span> It
-                        provides affordable access to quality health care services and offers the best customer
-                        support. Medic is the best choice for anyone looking for quality health care services
-                        in Bangladesh.
-                    </p>
+                    @foreach ($pharmacies as $pharmacy )
+                    <div>
+                        <img src="{{ asset($pharmacy->pharmacy_img) }}" alt="pharmacy Image">
+                        <p class="py-2">
+                            {!! $pharmacy->description !!}
+                        </p>
+                    </div>
+                    @endforeach
                 </div>
             </section>
             <!-- About Part End -->

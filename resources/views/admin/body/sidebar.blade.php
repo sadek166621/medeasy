@@ -45,11 +45,43 @@
             ">
                     <a class="menu-link" href="#">
                         <i class="fa fa-image fontawesome_icon_custom"></i>
-                        <span class="text">Banner</span>
+                        <span class="text">Health Articles</span>
                     </a>
                     <div class="submenu">
-                        <a class="{{ ($route == 'banner.index') ? 'active':'' }}" href="{{ route('banner.index') }}">Banner List</a>
-                        <a class="{{ ($route == 'banner.create') ? 'active':'' }}" href="{{ route('banner.create') }}">Banner Add</a>
+                        <a class="{{ ($route == 'health-artical.index') ? 'active':'' }}" href="{{ route('health-artical.index') }}"> List</a>
+                        <a class="{{ ($route == 'health-artical.create') ? 'active':'' }}" href="{{ route('health-artical.create') }}"> Add</a>
+                    </div>
+                </li>
+            @endif
+
+            @if(Auth::guard('admin')->user()->role == '1')
+                <li class="menu-item has-submenu
+                {{ ($route == 'best-pharmacy.index')? 'active':'' }}
+                {{ ($route == 'best-pharmacy.edit')? 'active':'' }}
+                {{ ($route == 'best-pharmacy.create')? 'active':'' }}
+            ">
+                    <a class="menu-link" href="#">
+                        <i class="fa fa-image fontawesome_icon_custom"></i>
+                        <span class="text">Best-Pharmacy</span>
+                    </a>
+                    <div class="submenu">
+                        <a class="{{ ($route == 'best-pharmacy.index') ? 'active':'' }}" href="{{ route('best-pharmacy.index') }}"> List</a>
+                        {{-- <a class="{{ ($route == 'best-pharmacy.create') ? 'active':'' }}" href="{{ route('best-pharmacy.create') }}"> Add</a> --}}
+                    </div>
+                </li>
+            @endif
+
+            @if(Auth::guard('admin')->user()->role == '1')
+                <li class="menu-item has-submenu
+                {{ ($route == 'how-to-order.create')? 'active':'' }}
+            ">
+                    <a class="menu-link" href="#">
+                        <i class="fa fa-image fontawesome_icon_custom"></i>
+                        <span class="text">How To Order</span>
+                    </a>
+                    <div class="submenu">
+                        <a class="{{ ($route == 'how-to-order.create') ? 'active':'' }}" href="{{ route('how-to-order.create') }}"> Form</a>
+                        {{-- <a class="{{ ($route == 'best-pharmacy.create') ? 'active':'' }}" href="{{ route('best-pharmacy.create') }}"> Add</a> --}}
                     </div>
                 </li>
             @endif
@@ -163,7 +195,7 @@
                 @endif
             @endif
 
-            <li class="menu-item has-submenu
+            <li class="menu-item has-submenu d-none
                 {{ ($route == 'campaing.index')? 'active':'' }}
                 {{ ($route == 'campaing.create')? 'active':'' }}
                 {{ ($route == 'campaing.edit')? 'active':'' }}
@@ -264,7 +296,7 @@
 {{--                    @endif--}}
 {{--                </div>--}}
 {{--            </li>--}}
-            <li class="menu-item has-submenu
+            <li class="menu-item has-submenu d-none
                 {{ ($route == 'staff.index')? 'active':'' }}
                 {{ ($route == 'staff.create')? 'active':'' }}
                 {{ ($route == 'staff.edit')? 'active':'' }}

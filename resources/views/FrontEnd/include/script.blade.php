@@ -126,7 +126,7 @@
                     success:function(response){
                         // alert(response.cartTotal);
                         //checkout();
-                        $('#cartSubTotal').text(response.cartTotal);
+                        $('span[id="cartSubTotal"]').text(parseFloat(response.cartTotal).toFixed(2));
                         $('#cartSubTotalShi').val(response.cartTotal);
                         $('.cartQty').text(Object.keys(response.carts).length);
                         $('#total_cart_qty').text(Object.keys(response.carts).length);
@@ -167,46 +167,94 @@
             miniCart();
             </script>
     <script>
+        // function search_result_hide(){
+        //     $(".searchProducts").slideUp();
+        // }
+
+        // function search_result_show(){
+        //     $(".searchProducts").slideDown();
+        // }
+
+        // $("body").on("keyup", ".search", function(){
+
+        //     let text = $(".search").val();
+        //     if(text.length == 0){
+        //         text = $('#mobile_search').val();
+
+        //     }
+        //     console.log(text);
+        //     let category_id = $("#searchCategory").val();
+        //     // alert(category_id);
+        //     // console.log(text);
+
+        //     if(text.length > 0){
+        //         $.ajax({
+        //             data: {search: text,},
+        //             url : "/search-product",
+        //             method : 'get',
+        //             beforSend : function(request){
+        //                 return request.setReuestHeader('X-CSRF-Token',("meta[name='csrf-token']"))
+
+        //             },
+        //             success:function(result){
+        //                 console.log(result);
+        //                 // alert('ok');
+        //                 $(".searchProducts").html(result);
+        //             }
+
+        //         }); // end ajax
+        //     } // end if
+        //     if (text.length < 1 ) $(".searchProducts").html("");
+        // }); // end function
         function search_result_hide(){
-            $(".searchProducts").slideUp();
-        }
+            if ($(".search").val().trim() === '') {
+                    $(".searchProducts").slideUp();
+                }
+            }
 
         function search_result_show(){
-            $(".searchProducts").slideDown();
-        }
-
-        $("body").on("keyup", ".search", function(){
-
-            let text = $(".search").val();
-            if(text.length == 0){
-                text = $('#mobile_search').val();
-
+            if ($(".search").val().trim() !== '') {
+                $(".searchProducts").slideDown();
+                }
             }
-            console.log(text);
-            let category_id = $("#searchCategory").val();
-            // alert(category_id);
-            // console.log(text);
 
-            if(text.length > 0){
+    $("body").on("keyup", ".search", function(){
+        let text = $(".search").val().trim();
+        if($('#mobile_search').length > 0 && $('#mobile_search').val().trim() !== '') {
+        text = $('#mobile_search').val().trim();
+    }
+
+        if(text.length == 0){
+            $(".searchProducts").html(""); // Clear search results
+            search_result_hide(); // Hide search results if input is empty
+            return; // Exit the function early if input is empty
+
+        }
+        let category_id = $("#searchCategory").val();
+
+        if(text.length > 0){
                 $.ajax({
                     data: {search: text,},
                     url : "/search-product",
                     method : 'get',
-                    beforSend : function(request){
-                        return request.setReuestHeader('X-CSRF-Token',("meta[name='csrf-token']"))
-
+                    beforeSend : function(request){
+                        request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
                     },
                     success:function(result){
                         console.log(result);
-                        // alert('ok');
                         $(".searchProducts").html(result);
+                        search_result_show(); // Show search results if input is not empty
                     }
+                });
+            }
+        })
 
-                }); // end ajax
-            } // end if
-            if (text.length < 1 ) $(".searchProducts").html("");
-        }); // end function
+
+
+
     </script>
+
+
     <script>
         document.getElementById('downloadButton').addEventListener('click', function () {
           // Get the HTML content of your invoice
@@ -838,14 +886,13 @@
                 test();
             }
             function cartRemove(id){
+                // alert('ok');
                 $.ajax({
                     type: 'GET',
                     url: '/cart-remove/'+id,
                     dataType:'json',
                     success:function(data){
-                        cart();
                         miniCart();
-
 
                         // Start Message
                         const Toast = Swal.mixin({

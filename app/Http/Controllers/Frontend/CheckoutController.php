@@ -42,18 +42,21 @@ class CheckoutController extends Controller
         $shippings = Shipping::where('status', 1)->get();
 
         $carts = Cart::content();
-        if(count($carts) == 0){
-//            return back()->with('message', 'Cart is Empty!!');
-            return redirect()->route('cart.show');
+        if($carts->isEmpty()){
+            $notification = array(
+                'message' => 'Your cart is empty.',
+                'alert-type' => 'error'
+            );
+            return redirect()->route('home')->with($notification);
         }
 
         $cartTotal = Cart::total();
-        if(Auth::user() && Auth::user()->role == 3){
+        // if(Auth::user() && Auth::user()->role == 3){
             return view('FrontEnd.checkout.index',compact('addresses','shippings', 'carts', 'cartTotal'));
-        }
-        else{
-            return redirect()->route('login');
-        }
+        // }
+        // else{
+        //     return redirect()->route('login');
+        // }
 
     } // end method
 

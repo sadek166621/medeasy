@@ -9,9 +9,9 @@
                 <h3 class="content-title">Attribute List </h3>
                 <strong style="font-weight: bold" class="text-dark"> {{ count($attributes) }} Attributes Found</strong>
             </div>
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <a href="{{ route('attribute.create') }}" class="btn btn-primary px-3 text-align-right" style="float: right; margin-right: 20px" title="Add Attribute"><i class="material-icons md-plus"></i></a>
-            </div>
+            </div> --}}
             <div class="col-1"></div>
         </div>
     </div>
@@ -41,8 +41,8 @@
                             <td class="text-end">
                                 <a href="{{ route('attribute.show',$attribute->id) }}" class="btn" style="background-color: #308fde; color: white" title="Details"><i class="fa fa-eye"></i></a>
                                 @if(Auth::guard('admin')->user()->role != '2')
-                                    <a style="padding:12px;" class="btn btn-primary" href="{{ route('attribute.edit',$attribute->id) }}" title="Edit Info"><i class="fa fa-pencil"></i></a>
-                                    <a class="btn btn-danger" href="{{ route('attribute.delete',$attribute->id) }}" id="delete" title="Delete"><i class="fa fa-trash"></i></a>
+                                    {{-- <a style="padding:12px;" class="btn btn-primary" href="{{ route('attribute.edit',$attribute->id) }}" title="Edit Info"><i class="fa fa-pencil"></i></a> --}}
+                                    {{-- <a class="btn btn-danger" href="{{ route('attribute.delete',$attribute->id) }}" id="delete" title="Delete"><i class="fa fa-trash"></i></a> --}}
                                 @endif
                                 <!-- dropdown //end -->
                             </td>

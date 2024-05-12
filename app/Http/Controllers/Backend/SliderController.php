@@ -41,10 +41,10 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'title_en' => 'required',
-            'description_en' => 'required',
+            // 'title_en' => 'required',
+            // 'description_en' => 'required',
             'slider_img' => 'required',
-            'type' => 'required'
+            // 'type' => 'required'
         ]);
 
         if($request->hasfile('slider_img')){
@@ -121,11 +121,11 @@ class SliderController extends Controller
     public function update(Request $request, $id)
     {
 //        return $request;
-        $this->validate($request,[
-            'title_en' => 'required',
-            'description_en' => 'required',
-            'type' => 'required'
-        ]);
+        // $this->validate($request,[
+        //     'title_en' => 'required',
+        //     'description_en' => 'required',
+        //     'type' => 'required'
+        // ]);
 
         $slider = Slider::find($id);
 

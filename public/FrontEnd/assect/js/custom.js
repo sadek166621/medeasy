@@ -55,7 +55,7 @@ $(document).ready(function () {
 
 // Categories Part
 
-$('.categories').owlCarousel({
+$('.index-categories').owlCarousel({
   loop: true,
   dots: false,
   autoplay: true,
@@ -228,7 +228,7 @@ console.log(pages.length);
 });
 
 
-// 
+//
 
 var buttonPlus  = $(".qty-btn-plus");
 var buttonMinus = $(".qty-btn-minus");

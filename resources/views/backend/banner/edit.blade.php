@@ -5,20 +5,20 @@
     <div class="row">
         <div class="col-md-8 offset-2">
             <div class="content-header">
-                <h2 class="content-title">Edit Banner</h2>
+                <h2 class="content-title">Edit health-artical</h2>
                 <div class="">
-                    <a href="{{route('banner.index') }}" class="btn btn-primary p-3" title="Category List"><i class="fa fa-list"></i></a>
+                    <a href="{{route('health-artical.index') }}" class="btn btn-primary p-3" title="Category List"><i class="fa fa-list"></i></a>
                 </div>
             </div>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-sm-8">
-            <form method="post" action="{{ route('banner.update', $banner->id) }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('health-artical.update', $banner->id) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h3>Banner</h3>
+                        <h3>health-artical</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -44,24 +44,6 @@
                                 <input class="form-control" id="description_bn" type="text" name="description_bn" placeholder="Write banner description bangla" value="{{ $banner->description_bn}}">
                             </div>
 
-                            <div class="col-sm-6 mb-4">
-                                <label for="banner_url" class="col-form-label" style="font-weight: bold;"> Banner Url:</label>
-                                <input class="form-control" type="text" name="banner_url" placeholder="Write banner url" value="{{ $banner->banner_url}}">
-                                @error('banner_url')
-                                    <p class="text-danger">{{$message}}</p>
-                                @enderror
-                            </div>
-                            <div class="col-sm-6 mb-4">
-                                <label for="position" class="col-form-label" style="font-weight: bold;"> Position:</label>
-                                <div class="custom_select">
-                                    <select class="form-control select-active w-100 form-select select-nice" name="position">
-                                        <option value="1" {{ $banner->position == 1 ? 'selected': '' }}>Home</option>
-                                        <option value="2" {{ $banner->position == 2 ? 'selected': '' }}>Middle Banner 1</option>
-                                        <option value="3" {{ $banner->position == 3 ? 'selected': '' }}>Middle Banner 2</option>
-                                        <option value="0" {{ $banner->position == 0 ? 'selected': '' }}>Footer</option>
-                                    </select>
-                                </div>
-                            </div>
                            <div class="mb-2 col-sm-6">
                                 <img id="showImage" class="rounded avatar-lg mb-3" src="{{ asset($banner->banner_img) }}" alt="Card image cap" width="100px" height="80px;">
                            </div>

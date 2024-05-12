@@ -58,6 +58,18 @@
         margin: 0 0 0 7px;
         text-decoration: line-through;
     }
+    .advanced-nm{
+        color: black;
+        font-size: medium;
+        position: relative;
+        top: 15px;
+    }
+    /* @media (min-width: 576px) {
+        .advanced-nm{
+        color: black;
+        font-size: medium;
+    }
+        } */
 
     </style>
 
@@ -89,7 +101,7 @@
                         @else --}}
                             <div class="list border-bottom">
                                 <img src="{{ asset($product->product_thumbnail) }}" style="width: 30px; height: 30px;">
-                                <div class="d-flex flex-column ml-3" style="margin-left: 10px;"> <span style="color: black;">{{ $product->name_en }} </span>
+                                <div class="d-flex flex-column ml-3 advanced-nm" style="margin-left: 10px;"> <span >{{ $product->name_en }} </span>
                                     <!-- start product discount section -->
                                     @php
                                         if($product->discount_type == 1){

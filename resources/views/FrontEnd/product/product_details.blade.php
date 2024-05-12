@@ -18,6 +18,10 @@
                         </div>
                     </div>
 
+                    {{-- @php
+                        dd($product->id)
+                    @endphp --}}
+
                     <div class="col-md-5 mt-4 mt-lg-0">
                         <?php $discount = calculateDiscount($product->id) ?>
                         <input type="hidden" id="product_id" value="{{ $product->id }}"  min="1">
@@ -34,6 +38,9 @@
 
                         <input type="hidden" id="buyNowCheck" value="0">
                         <input type="hidden" name="" id="discount_amount" value="{{$product->regular_price - $discount['discount']}}">
+                        {{-- @php
+                            dd($product->regular_price - $discount['discount'] );
+                        @endphp --}}
                         <div class="product-description border p-3">
                             <div>
                                 <h2 class="product-title">{{ $product->name_en }} <span>{{ $product->unit_weight }} {{ $product->unit->name }}</span></h2>
@@ -146,6 +153,9 @@
                     </div>
                 </div>
             </section>
+            {{-- @php
+                dd($product->id)
+            @endphp --}}
             <!-- Product Information End -->
 
             <!--Similar Product Start -->
@@ -157,47 +167,47 @@
                     </div>
                     <div class="owl-stage-outer">
                         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 owl-stage g-3">
-                            @foreach ($alternatives as $product )
-                            @php $data = calculateDiscount($product->id) @endphp
+                            @foreach ($alternatives as $altproduct )
+                            @php $data = calculateDiscount($altproduct->id) @endphp
                                 <div class="col owl-item">
                                     <div class="card h-100">
-                                        @if($product->discount_price != 0)
+                                        @if($altproduct->discount_price != 0)
                                         <div class="offer"> {{$data['text']}}</div>
                                         @endif
-                                        <a href="{{route('product.details', $product->slug)}}"> <img src="{{asset($product->product_thumbnail)}}" class="card-img-top"
+                                        <a href="{{route('product.details', $altproduct->slug)}}"> <img src="{{asset($altproduct->product_thumbnail)}}" class="card-img-top"
                                                 alt="Products Image"></a>
                                         <div class="card-body">
-                                            <a class="product-name" href="{{route('product.details', $product->slug)}}">{{ $product->name_en }}<span>{{ $product->unit_weight }} {{ $product->unit->name }}</span></a>
-                                            <p class="product-type">{{ $product->type->name }}</p>
-                                            <a href="{{route('product.details', $product->slug)}}" class="generic-name">{{$product->group->name }}</a>
-                                            <p class="company-name">{{ $product->brand->name_en }}</p>
+                                            <a class="product-name" href="{{route('product.details', $altproduct->slug)}}">{{ $altproduct->name_en }}<span>{{ $altproduct->unit_weight }} {{ $altproduct->unit->name }}</span></a>
+                                            <p class="product-type">{{ $altproduct->type->name }}</p>
+                                            <a href="{{route('product.details', $altproduct->slug)}}" class="generic-name">{{$altproduct->group->name }}</a>
+                                            <p class="company-name">{{ $altproduct->brand->name_en }}</p>
                                         </div>
                                         <div class="product-price">
-                                            @if($product->discount_price != 0)
+                                            @if($altproduct->discount_price != 0)
                                             <p>
                                                 ৳{{$data['discount']}}
                                                 <span class="main-price">
-                                                    ৳{{$product->regular_price}}
+                                                    ৳{{$altproduct->regular_price}}
                                                 </span>
                                             </p>
                                             @endif
                                         </div>
-                                        @if($product->stock_qty == 0)
+                                        @if($altproduct->stock_qty == 0)
                                             <div class="d-flex justify-content-between mx-lg-2 my-1">
                                                 <div class="out-of-stock">Out Of Stock</div>
                                             </div>
-                                        @elseif($product->is_varient == 1)
+                                        @elseif($altproduct->is_varient == 1)
                                             <div class="d-flex justify-content-between mx-lg-2 my-1">
-                                                <button type="submit" id="{{ $product->id }}" onclick="window.location='{{ URL::route('product.details',$product->slug); }}'" class="buy_now">Buy Now</button>
-                                                <button type="submit" id="{{ $product->id }}" onclick="window.location='{{ URL::route('product.details',$product->slug); }}'" class="add_to_cart">Add to Cart</button>
+                                                <button type="submit" id="{{ $altproduct->id }}" onclick="window.location='{{ URL::route('product.details',$altproduct->slug); }}'" class="buy_now">Buy Now</button>
+                                                <button type="submit" id="{{ $altproduct->id }}" onclick="window.location='{{ URL::route('product.details',$altproduct->slug); }}'" class="add_to_cart">Add to Cart</button>
                                             </div>
                                         @else
                                             <div class="d-flex justify-content-between mx-lg-2 my-1">
                                                 <input type="hidden" id="pfrom" value="direct">
-                                                <input type="hidden" id="product_product_id" value="{{ $product->id }}" min="1">
-                                                <input type="hidden" id="{{ $product->id }}-product_pname" value="{{ $product->name_en }}">
-                                                <button type="submit"  onclick="buyNow({{ $product->id }})" class="buy_now">Buy Now</button>
-                                                <button type="submit" onclick="addToCartDirect({{ $product->id }})" class="add_to_cart">Add to Cart</button>
+                                                <input type="hidden" id="product_product_id" value="{{ $altproduct->id }}" min="1">
+                                                <input type="hidden" id="{{ $altproduct->id }}-product_pname" value="{{ $product->name_en }}">
+                                                <button type="submit"  onclick="buyNow({{ $altproduct->id }})" class="buy_now">Buy Now</button>
+                                                <button type="submit" onclick="addToCartDirect({{ $altproduct->id }})" class="add_to_cart">Add to Cart</button>
                                             </div>
                                         @endif
                                     </div>
@@ -271,16 +281,14 @@
         var discount = parseFloat($('#discount').val());
         var current_price = 0;
         var product_quantity = $('#qty').val();
-        console.log(discount_type, discount);
+        console.log(variant,product_id,discount_type, discount,current_price,product_quantity);
         $.ajax({
-
             type: 'GET',
                 url: '/varient-price/'+ product_id +'/'+variant,
                 dataType:'json',
 
                 success:function(response){
-                    // console.log(response);
-
+                    console.log(response);
                     $('#main_price').text(response.price);
                      if(discount_type == 1){
                         current_price = response.price - discount;
@@ -291,7 +299,6 @@
                     $('#product_current_price').text(current_price *product_quantity);
                     $('#variant_type').text(variant);
                     $('#discount_amount').val(current_price);
-
                 }
 
         });

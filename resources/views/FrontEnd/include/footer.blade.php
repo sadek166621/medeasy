@@ -64,7 +64,7 @@
                     <p>
                         &copy; 2024 || <a href="index.html">Medic</a> || All Rights Reserved ||
 
-                        Developed By <a href="#">Sky Dream IT</a>
+                        Developed By <a href="https://skydreamit.com/">Sky Dream IT</a>
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-end mb-5 mb-lg-0">

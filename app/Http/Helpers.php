@@ -304,7 +304,7 @@ function get_tab_category_products($slug)
 
     $conditions = ['status' => 1];
 
-    $products = Product::where($conditions)->take(2);
+    $products = Product::where($conditions)->take(20);
 
     $category_ids = CategoryUtility::children_ids($category->id);
     $category_ids[] = $category->id;
