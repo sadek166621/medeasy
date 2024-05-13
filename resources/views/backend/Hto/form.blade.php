@@ -6,9 +6,9 @@
         <div class="col-md-8 offset-2">
             <div class="content-header">
                 <h2 class="content-title">Add How To Order</h2>
-                <div class="">
+                {{-- <div class="">
                     <a href="{{route('how-to-order.index') }}" class="btn btn-primary p-3" title="Category List"><i class="fa fa-list"></i></a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

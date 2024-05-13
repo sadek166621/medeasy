@@ -438,6 +438,10 @@ Route::middleware('adminAccess')->group(function(){
 	Route::post('/how-to-order/update/{id}', [HtoController::class, 'update'])->name('how-to-order.update');
 	Route::get('/how-to-order/delete/{id}', [HtoController::class, 'destroy'])->name('how-to-order.destroy');
 
+    //prescription//
+    Route::get('/prescription', [AdminController::class, 'prescriptionIndex'])->name('prescription.inbox');
+    Route::get('/prescription.delete/{id}', [AdminController::class, 'prescriptiondelete'])->name('prescription.delete');
+
 	// role premissions staffs //
 	Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
 	Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');

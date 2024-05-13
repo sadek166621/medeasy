@@ -69,18 +69,14 @@ class OtpLoginController extends Controller
                     );
                     return response()->json(['msg' => 'Login successful']);
                 }
-                else{
-                    Auth::guard('web')->logout();
-                    $request->session()->invalidate();
-                    $request->session()->regenerateToken();
-
-                    $notification = array(
-                        'msg' => 'Invaild Email Or Password.',
-                        'alert-type' => 'error'
-                    );
-                    return response()->json(['error' => 'Invalid OTP'], 422);
-                }
-
+            }
+            
+            else{
+                $notification = array(
+                    'message' => 'Invaild Email Or Password.',
+                    'alert-type' => 'error'
+                );
+                return response()->json(['error' => 'Invalid OTP']);
             }
 
         }

@@ -142,7 +142,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="card card-body mb-4 shadow bg-white rounded" style="border: 1px solid #365486">
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-success-light"><i class="fa-solid fa-clipboard-user"></i></span>
@@ -156,7 +156,7 @@
             </div>
         </div>
         @endif
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="card card-body mb-4 shadow bg-white rounded" style="border: 1px solid #365486">
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-success-light"><i class="fa-solid fa-copyright"></i></span>
@@ -169,20 +169,20 @@
             </div>
         </div>
         @if(Auth::guard('admin')->user()->role != '2')
-        <div class="col-lg-3 d-none">
+        <div class="col-lg-3 ">
             <div class="card card-body mb-4 shadow bg-white rounded" style="border: 1px solid #365486">
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-success-light"><i class="fa-solid fa-users"></i></span>
                     <div class="text">
-                        <h6 class="mb-1 card-title">Vendors</h6>
-                        <span>{{ number_format(count($vendorCount)) }}</span>
+                        <h6 class="mb-1 card-title">Prescription</h6>
+                        <span>{{ number_format($prescription->total_prescriptions) }}</span>
                         {{-- <span class="text-sm"> Who are selling products here. </span> --}}
                     </div>
                 </article>
             </div>
         </div>
         @endif
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="card card-body mb-4 shadow bg-white rounded" style="border: 1px solid #365486">
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-success-light"><i class="fa-solid fa-battery-quarter"></i></span>

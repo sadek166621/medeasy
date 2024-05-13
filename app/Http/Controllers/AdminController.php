@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Vendor;
 use App\Models\User;
+use App\Models\Prescription;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -71,6 +72,10 @@ class AdminController extends Controller
             ->where('status', 1)
             ->first();
 
+        $prescription = DB::table('prescriptions')
+            ->select(DB::raw('count(*) as total_prescriptions'))
+            ->first();
+
         $StaffCount = DB::table('staff')->count();
 
         $vendorCount = Vendor::all();
@@ -105,7 +110,7 @@ class AdminController extends Controller
             return view('admin.index', compact('products','userCount', 'productCount', 'categoryCount', 'brandCount', 'vendorCount', 'orderCount', 'lowStockCount','StaffCount','orders'));
         }
 
-    	return view('admin.index', compact('userCount', 'productCount', 'categoryCount', 'brandCount', 'vendorCount', 'orderCount', 'lowStockCount','StaffCount','orders'));
+    	return view('admin.index', compact('prescription','userCount', 'productCount', 'categoryCount', 'brandCount', 'vendorCount', 'orderCount', 'lowStockCount','StaffCount','orders'));
     } // end method
 
     /*=================== End Dashboard Methoed ===================*/
@@ -284,4 +289,17 @@ class AdminController extends Controller
     } // end method
 
     /* =============== End clearCache Method ================*/
+
+    public function prescriptionIndex(){
+      $prescriptions = Prescription::orderBy('id','desc')->get();
+        return view('backend.prescription.index',compact('prescriptions'));
+    }
+    public function prescriptiondelete($id){
+        $prescription = Prescription::find($id);
+        $prescription->delete();
+        Session::flash('success','Prescription Deleted Successfully');
+        return redirect()->back();
+
+
+    }
 }

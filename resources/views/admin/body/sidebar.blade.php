@@ -44,7 +44,7 @@
                 {{ ($route == 'banner.create')? 'active':'' }}
             ">
                     <a class="menu-link" href="#">
-                        <i class="fa fa-image fontawesome_icon_custom"></i>
+                        <i class="fa fa-heart fontawesome_icon_custom"></i>
                         <span class="text">Health Articles</span>
                     </a>
                     <div class="submenu">
@@ -61,7 +61,7 @@
                 {{ ($route == 'best-pharmacy.create')? 'active':'' }}
             ">
                     <a class="menu-link" href="#">
-                        <i class="fa fa-image fontawesome_icon_custom"></i>
+                        <i class="fa fa-prescription-bottle fontawesome_icon_custom"></i>
                         <span class="text">Best-Pharmacy</span>
                     </a>
                     <div class="submenu">
@@ -76,7 +76,22 @@
                 {{ ($route == 'how-to-order.create')? 'active':'' }}
             ">
                     <a class="menu-link" href="#">
-                        <i class="fa fa-image fontawesome_icon_custom"></i>
+                        <i class="fa fa-prescription fontawesome_icon_custom"></i>
+                        <span class="text">Prescription</span>
+                    </a>
+                    <div class="submenu">
+                        <a class="{{ ($route == 'prescription.inbox') ? 'active':'' }}" href="{{ route('prescription.inbox') }}">List</a>
+                        {{-- <a class="{{ ($route == 'best-pharmacy.create') ? 'active':'' }}" href="{{ route('best-pharmacy.create') }}"> Add</a> --}}
+                    </div>
+                </li>
+            @endif
+
+            @if(Auth::guard('admin')->user()->role == '1')
+                <li class="menu-item has-submenu
+                {{ ($route == 'how-to-order.create')? 'active':'' }}
+            ">
+                    <a class="menu-link" href="#">
+                        <i class="icon material-icons md-pages"></i>
                         <span class="text">How To Order</span>
                     </a>
                     <div class="submenu">

@@ -13,6 +13,7 @@
     justify-content: center;
 }
 </style>
+
 <!-- Mobile Slider Start -->
 <div class="mobile-slider d-block d-md-none">
     <div id="carouselExampleInterval-1" class="carousel slide" data-bs-ride="carousel">
@@ -153,7 +154,7 @@
                                                     <!-- Your logo here -->
                                                     <img alt="medEasy" src="{{asset('FrontEnd')}}/assect/img/articles/medeasy-login-signup-otp.webp" decoding="async">
                                                 </div>
-                                                <h4 class="login-heading">Update Image</h4>
+                                                <h4 class="login-heading">Upload Presciption Image</h4>
                                                 <form class="login-form" action="{{ route('upload-precription') }}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <!-- Your form fields here -->
@@ -161,7 +162,7 @@
                                                         <textarea type="text" name="address" required class="login-input form-control" placeholder="Your Full Address" value=""></textarea>
                                                     </div>
                                                     <div class="input-container">
-                                                        <input type="file" name="image" required class="login-input form-control" placeholder="Your Contact Number" value="">
+                                                        <input type="file" name="image" accept="image/*" required class="login-input form-control" placeholder="Your Contact Number" value="">
                                                     </div>
 
                                                     <div class="button-container">
@@ -1857,3 +1858,16 @@
 </section>
 <!-- Desktop Option & Slider Part End -->
 @endsection
+@push('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@if(session()->has('message'))
+    <script>
+        Swal.fire({
+            icon: '{{ session('alert-type') }}',
+            title: '{{ session('message') }}',
+            showConfirmButton: false,
+            timer: 2000 // Close SweetAlert after 2 seconds
+        });
+    </script>
+@endif
+@endpush

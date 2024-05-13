@@ -615,21 +615,37 @@
                     });
                     $('.login-heading').text('Please Enter OTP');
                 } else {
-                    // Login successful
-                    window.location.reload();
-                    $('#staticBackdrop').modal('hide'); // Hide the modal
-                    // Show success message
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 1200
-                    });
-                    Toast.fire({
-                        title: response.msg
-                    });
-                    // Reload the page
+                    if (response.error) {
+                        // Show error message
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        Toast.fire({
+                            title: response.error
+                        });
+                    } else {
+                        // Check if login successful
+                        if (response.msg === 'Login successful') {
+                            // Hide the modal if login successful
+                            $('#staticBackdrop').modal('hide');
+                            window.location.reload();
+                        }
+                        // Show success message
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1200
+                        });
+                        Toast.fire({
+                            title: response.msg
+                        });
+                    }
                 }
             },
             error: function (xhr, status, error) {
@@ -650,7 +666,6 @@
         });
     });
 });
-
 </script>
 
 

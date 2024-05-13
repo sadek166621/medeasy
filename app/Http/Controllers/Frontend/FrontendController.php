@@ -388,8 +388,11 @@ class FrontendController extends Controller
             'image'=>$save_url,
             'address'=>$request->address,
         ]);
-        Session::flash('success','Prescription Uploaded Successfully');
-        return back();
+        $notification = array(
+            'message' => 'Prescription Upload Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('home')->with($notification);
     }
     /* ================= END PRODUCT VIEW WITH MODAL METHOD =================== */
     public function allhealtharticle(){
